@@ -43,7 +43,7 @@ const CarList = () => {
       "Are you sure to delete this car?"
     );
     if (confirmDelete) {
-      employeeService
+      carService
         .remove(plate)
         .then((response) => {
           console.log("Car has been deleted.", response.data);
