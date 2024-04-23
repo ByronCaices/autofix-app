@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar"
 import Home from './components/Home';
 import NotFound from './components/NotFound';
 import CarList from './components/CarsList';
+import AddEditCar from './components/AddEditCar';
 
 function App() {
   return (
@@ -14,6 +15,8 @@ function App() {
               <Route path="/home" element={<Home/>} />
               <Route path="*" element={<NotFound/>} />
               <Route path="/car/list" element={<CarList/>} />
+              <Route path="/car/edit/:plateState" element={<AddEditCar/>} />
+              <Route path="/car/add" element={<AddEditCar/>} />
             </Routes>
           </div>
       </Router>

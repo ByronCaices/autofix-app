@@ -8,8 +8,9 @@ import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import SaveIcon from "@mui/icons-material/Save";
 
-const AddEditEmployee = () => {
-  const { plate } = useParams();
+const AddEditCar = () => {
+  const { plateState } = useParams();
+  var [plate, setPlate] = useState("");
   const [bodywork, setBodywork] = useState("");
   const [engine, setEngine] = useState("");
   const [brand, setBrand] = useState("");
@@ -24,17 +25,17 @@ const AddEditEmployee = () => {
     e.preventDefault();
 
     const car = { plate, bodywork, engine, brand, model, mileage, year, seats };
-    if (plate) {
-      //Actualizar Datos Empelado
+    if (plateState) {
+      //Actualizar Datos 
       carService
-        .update(car)
+        .updateCar(car)
         .then((response) => {
           console.log("Car ha sido actualizado.", response.data);
           navigate("/car/list");
         })
         .catch((error) => {
           console.log(
-            "An error ocurred while trying tu update car.",
+            "An error ocurred while trying to update car.",
             error
           );
         });
@@ -47,6 +48,7 @@ const AddEditEmployee = () => {
           navigate("/car/list");
         })
         .catch((error) => {
+          console.log(car)
           console.log(
             "An error ocurred while trying tu add new car.",
             error
@@ -56,10 +58,14 @@ const AddEditEmployee = () => {
   };
 
   useEffect(() => {
-    if (plate) {
+    
+    console.log("Edit Car Plate: ", plateState);
+    if (plateState) {
       setTitleCarForm("Edit Car");
+      
+      //plate=plateState;
       carService
-        .getByPlate(plate)
+        .getByPlate(plateState)
         .then((car) => {
           setBodywork(car.data.bodywork);
           setBrand(car.data.brand);
@@ -92,7 +98,7 @@ const AddEditEmployee = () => {
           <TextField
             id="plate"
             label="Plate"
-            value={plate}
+            value={plateState}
             variant="standard"
             onChange={(e) => setPlate(e.target.value)}
             helperText="Ej. ABCD12"

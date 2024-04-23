@@ -60,14 +60,14 @@ const CarList = () => {
 
   const handleEdit = (plate) => {
     console.log("handleEdit", plate);
-    /*navigate(`/employee/edit/${id}`);*/
+    navigate(`/car/edit/${plate}`);
   };
 
   return (
     <TableContainer component={Paper}>
       <br />
       <Link
-        to="/employee/add"
+        to="/car/add"
         style={{ textDecoration: "none", marginBottom: "1rem" }}
       >
         <Button

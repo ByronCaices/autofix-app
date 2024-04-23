@@ -13,11 +13,15 @@ const getByBrand = brand => {
 }
 
 const create = data => {
-    return httpClient.post('/api/v1/cars/')
+    return httpClient.post('/api/v1/cars/', data)
+}
+
+const updateCar = data => {
+    return httpClient.put('/api/v1/cars/updt', data);
 }
 
 const remove = plate => {
-    return httpClient.get(`/api/v1/cars/${plate}`)
+    return httpClient.delete(`/api/v1/cars/${plate}`)
 }
 
 export default { getAll, getByPlate, getByBrand, create, remove}
