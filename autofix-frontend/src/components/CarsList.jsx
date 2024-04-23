@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import employeeService from "../services/employee.service";
+import carService from "../services/car.service";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
@@ -13,21 +13,21 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const EmployeeList = () => {
-  const [employees, setEmployees] = useState([]);
+const CarList = () => {
+  const [cars, setCars] = useState([]);
 
   const navigate = useNavigate();
 
   const init = () => {
-    employeeService
+    carService
       .getAll()
       .then((response) => {
-        console.log("Mostrando listado de todos los empleados.", response.data);
-        setEmployees(response.data);
+        console.log("Listing cars...", response.data);
+        setCars(response.data);
       })
       .catch((error) => {
         console.log(
-          "Se ha producido un error al intentar mostrar listado de todos los empleados.",
+          "An error ocurred while listing cars.",
           error
         );
       });
@@ -37,30 +37,30 @@ const EmployeeList = () => {
     init();
   }, []);
 
-  const handleDelete = (id) => {
-    console.log("Printing id", id);
+  const handleDelete = (plate) => {
+    console.log("Printing plate...", plate);
     const confirmDelete = window.confirm(
-      "¿Esta seguro que desea borrar este empleado?"
+      "Are you sure to delete this car?"
     );
     if (confirmDelete) {
       employeeService
-        .remove(id)
+        .remove(plate)
         .then((response) => {
-          console.log("empleado ha sido eliminado.", response.data);
-          init();
+          console.log("Car has been deleted.", response.data);
+          init(); // Reload the list of cars
         })
         .catch((error) => {
           console.log(
-            "Se ha producido un error al intentar eliminar al empleado",
+            "An error ocurred while trying to delete the car.",
             error
           );
         });
     }
   };
 
-  const handleEdit = (id) => {
-    console.log("Printing id", id);
-    navigate(`/employee/edit/${id}`);
+  const handleEdit = (plate) => {
+    console.log("handleEdit", plate);
+    /*navigate(`/employee/edit/${id}`);*/
   };
 
   return (
@@ -75,7 +75,7 @@ const EmployeeList = () => {
           color="primary"
           startIcon={<PersonAddIcon />}
         >
-          Añadir Empleado
+          Add Car
         </Button>
       </Link>
       <br /> <br />
@@ -83,57 +83,62 @@ const EmployeeList = () => {
         <TableHead>
           <TableRow>
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
-              Rut
+              Plate
             </TableCell>
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
-              Nombre
+              Engine
             </TableCell>
             <TableCell align="right" sx={{ fontWeight: "bold" }}>
-              Sueldo
+              Brand
             </TableCell>
             <TableCell align="right" sx={{ fontWeight: "bold" }}>
-              Nro.Hijos
+              Model
             </TableCell>
             <TableCell align="right" sx={{ fontWeight: "bold" }}>
-              Categoria
+              Mileage
             </TableCell>
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
-              Operaciones
+              Year
+            </TableCell>
+            <TableCell align="left" sx={{ fontWeight: "bold" }}>
+              Seats
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {employees.map((employee) => (
+          {cars.map((car) => (
             <TableRow
-              key={employee.id}
+              key={car.plate}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell align="left">{employee.rut}</TableCell>
-              <TableCell align="left">{employee.name}</TableCell>
-              <TableCell align="right">{employee.salary}</TableCell>
-              <TableCell align="right">{employee.children}</TableCell>
-              <TableCell align="right">{employee.category}</TableCell>
+              <TableCell align="left">{car.plate}</TableCell>
+              <TableCell align="left">{car.engine}</TableCell>
+              <TableCell align="right">{car.brand}</TableCell>
+              <TableCell align="right">{car.model}</TableCell>
+              <TableCell align="right">{car.mileage}</TableCell>
+              <TableCell align="right">{car.year}</TableCell>
+              <TableCell align="right">{car.seats}</TableCell>
               <TableCell>
                 <Button
                   variant="contained"
                   color="info"
                   size="small"
-                  onClick={() => handleEdit(employee.id)}
+                  onClick={() => handleEdit(car.plate)}
                   style={{ marginLeft: "0.5rem" }}
                   startIcon={<EditIcon />}
                 >
-                  Editar
+                  Edit
                 </Button>
 
                 <Button
                   variant="contained"
                   color="error"
                   size="small"
-                  onClick={() => handleDelete(employee.id)}
+                  onClick={() => handleDelete(car.plate)}
                   style={{ marginLeft: "0.5rem" }}
                   startIcon={<DeleteIcon />}
                 >
-                  Eliminar
+                  Delete
                 </Button>
               </TableCell>
             </TableRow>
@@ -144,4 +149,4 @@ const EmployeeList = () => {
   );
 };
 
-export default EmployeeList;
+export default CarList;

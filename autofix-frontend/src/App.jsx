@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import Navbar from "./components/Navbar"
 import Home from './components/Home';
 import NotFound from './components/NotFound';
+import CarList from './components/CarsList';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
             <Routes>
               <Route path="/home" element={<Home/>} />
               <Route path="*" element={<NotFound/>} />
+              <Route path="/car/list" element={<CarList/>} />
             </Routes>
           </div>
       </Router>
