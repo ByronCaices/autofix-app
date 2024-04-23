@@ -86,6 +86,9 @@ const CarList = () => {
               Plate
             </TableCell>
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
+              Bodywork
+            </TableCell>
+            <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Engine
             </TableCell>
             <TableCell align="right" sx={{ fontWeight: "bold" }}>
@@ -112,6 +115,7 @@ const CarList = () => {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell align="left">{car.plate}</TableCell>
+              <TableCell align="left">{car.bodywork}</TableCell>
               <TableCell align="left">{car.engine}</TableCell>
               <TableCell align="right">{car.brand}</TableCell>
               <TableCell align="right">{car.model}</TableCell>

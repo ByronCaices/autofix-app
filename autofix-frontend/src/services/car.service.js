@@ -16,12 +16,12 @@ const create = data => {
     return httpClient.post('/api/v1/cars/', data)
 }
 
-const updateCar = data => {
-    return httpClient.put('/api/v1/cars/updt', data);
+const update = data => {
+    return httpClient.put('/api/v1/cars/updt', data)
 }
 
 const remove = plate => {
     return httpClient.delete(`/api/v1/cars/${plate}`)
 }
 
-export default { getAll, getByPlate, getByBrand, create, remove}
+export default { getAll, getByPlate, getByBrand, create, remove, update}

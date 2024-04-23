@@ -21,26 +21,37 @@ const AddEditCar = () => {
   const [titleCarForm, setTitleCarForm] = useState("");
   const navigate = useNavigate();
 
+  const handlePlateChange = (event) => {
+    const newValue = event.target.value;
+    setPlate(newValue);       // Actualiza la primera variable de estado
+     // Actualiza la segunda variable de estado
+  };
+
   const saveCar = (e) => {
     e.preventDefault();
-
+    console.log("Save Car Plate: ", plateState);
+    
     const car = { plate, bodywork, engine, brand, model, mileage, year, seats };
+    console.log(car)
+    car.plate = plateState;
     if (plateState) {
       //Actualizar Datos 
       carService
-        .updateCar(car)
+        .update(car)
         .then((response) => {
           console.log("Car ha sido actualizado.", response.data);
           navigate("/car/list");
         })
         .catch((error) => {
+          //console.log(car)
           console.log(
             "An error ocurred while trying to update car.",
             error
           );
         });
     } else {
-      //Crear nuevo empleado
+      //Crear nuevo
+      
       carService
         .create(car)
         .then((response) => {
