@@ -21,19 +21,16 @@ const AddEditCar = () => {
   const [titleCarForm, setTitleCarForm] = useState("");
   const navigate = useNavigate();
 
-  const handlePlateChange = (event) => {
-    const newValue = event.target.value;
-    setPlate(newValue);       // Actualiza la primera variable de estado
-     // Actualiza la segunda variable de estado
-  };
-
   const saveCar = (e) => {
     e.preventDefault();
-    console.log("Save Car Plate: ", plateState);
+    
+    console.log("1.Save Car Plate: ", plateState);
     
     const car = { plate, bodywork, engine, brand, model, mileage, year, seats };
     console.log(car)
-    car.plate = plateState;
+    setPlate(plateState);
+    console.log("2.Save Car Plate: ", plate);
+    
     if (plateState) {
       //Actualizar Datos 
       carService
@@ -69,15 +66,17 @@ const AddEditCar = () => {
   };
 
   useEffect(() => {
-    
+    setPlate(plateState);
     console.log("Edit Car Plate: ", plateState);
     if (plateState) {
       setTitleCarForm("Edit Car");
+      console.log("XXXXXX")
       
       //plate=plateState;
       carService
         .getByPlate(plateState)
         .then((car) => {
+          setPlate(car.data.plateState)
           setBodywork(car.data.bodywork);
           setBrand(car.data.brand);
           setEngine(car.data.engine);
@@ -109,7 +108,7 @@ const AddEditCar = () => {
           <TextField
             id="plate"
             label="Plate"
-            value={plateState}
+            value={plate}
             variant="standard"
             onChange={(e) => setPlate(e.target.value)}
             helperText="Ej. ABCD12"
