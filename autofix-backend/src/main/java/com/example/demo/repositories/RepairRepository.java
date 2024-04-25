@@ -42,4 +42,11 @@ public interface RepairRepository extends JpaRepository<RepairEntity,Long> {
             "ORDER BY SUM(total_amount) DESC, repair_type, engine", nativeQuery = true)
     List<Object[]> getRepairTypeAmountsByEngine();
 
+    @Query(value = "SELECT * FROM REPAIRS WHERE repair_code = :repair_code", nativeQuery = true)
+    public List<RepairEntity> findByRepairCode(@Param("repair_code") String repair_code);
+
+    @Query(value = "SELECT sum(total_amount) FROM REPAIRS where repair_code = :repair_code", nativeQuery = true)
+    public float sumTotalAmountByRepairCode(@Param("repair_code") String repair_code);
+
+
 }

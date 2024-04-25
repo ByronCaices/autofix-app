@@ -80,4 +80,16 @@ public class RepairController {
         }
     }
 
+    @GetMapping("/repairCode_{repair_code}")
+    public ResponseEntity<List<RepairEntity>> getRepairsByRepairCode(@PathVariable String repair_code) {
+        List<RepairEntity> repairs = repairService.getRepairsByRepairCode(repair_code);
+        return ResponseEntity.ok(repairs);
+    }
+
+    @GetMapping("/totalAmount_{repair_code}")
+    public ResponseEntity<Float> sumTotalAmountByRepairCode(@PathVariable String repair_code) {
+        float totalAmount = repairService.sumTotalAmountByRepairCode(repair_code);
+        return ResponseEntity.ok(totalAmount);
+    }
+
 }

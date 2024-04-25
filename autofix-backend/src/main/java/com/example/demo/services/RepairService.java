@@ -234,5 +234,13 @@ public class RepairService {
         repairRepository.deleteById(id);
     }
 
+    public List<RepairEntity> getRepairsByRepairCode(String repair_code) {
+        return repairRepository.findByRepairCode(repair_code);
+    }
+
+    public float sumTotalAmountByRepairCode(String repair_code) {
+        return repairRepository.sumTotalAmountByRepairCode(repair_code);
+    }
+
 
 }

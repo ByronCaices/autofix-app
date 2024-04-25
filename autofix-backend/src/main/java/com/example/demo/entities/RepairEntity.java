@@ -20,6 +20,7 @@ public class RepairEntity {
     @Column(unique = true, nullable = false)
     private Long id;
 
+    private String repairCode;
     private String plate;
     private String engine;
     private String bodywork;
