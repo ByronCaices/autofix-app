@@ -15,8 +15,7 @@ public interface CarRepository extends JpaRepository<CarEntity, String> {
     public CarEntity findByPlate(String plate);
     public List<CarEntity> findByBrand(String brand);
     public List<CarEntity> findByBodywork(String bodywork);
-    public List<CarEntity> findCarEntitiesByEngine(String engine);
-    public List<CarEntity> findCarEntitiesByYear(Integer year);
+    //public CarEntity updateCar(CarEntity car);
 
     @Query(value="DELETE FROM cars WHERE plate = :plate", nativeQuery = true)
     public void deleteByPlate(@Param("plate") String plate);

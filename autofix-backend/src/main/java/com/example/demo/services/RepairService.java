@@ -230,5 +230,9 @@ public class RepairService {
         return repairRepository.save(repair);
     }
 
+    public void deleteRepair(Long id) {
+        repairRepository.deleteById(id);
+    }
+
 
 }

@@ -22,6 +22,10 @@ public class CarService {
         return carRepository.save(car);
     }
 
+    public CarEntity update(CarEntity car){
+        return carRepository.save(car);
+    }
+
     public boolean deleteCar(String plate) throws Exception {
         try{
             carRepository.deleteCarByPlate(plate);

@@ -70,4 +70,14 @@ public class RepairController {
         return ResponseEntity.ok(repairUpdated);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> deleteRepair(@PathVariable Long id){
+        try {
+            repairService.deleteRepair(id);
+            return ResponseEntity.ok(true);
+        } catch (Exception e) {
+            return ResponseEntity.ok(false);
+        }
+    }
+
 }

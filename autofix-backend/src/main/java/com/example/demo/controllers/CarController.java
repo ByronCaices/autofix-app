@@ -57,6 +57,12 @@ public class CarController {
         return ResponseEntity.ok(car);
     }
 
+    @PutMapping("/updt")
+    public ResponseEntity<CarEntity> updateCar(@RequestBody CarEntity car){
+        CarEntity carUpdated = carService.update(car);
+        return ResponseEntity.ok(carUpdated);
+    }
+
     @DeleteMapping("/{plate}")
     public ResponseEntity<Boolean> deleteCarByPlate(@PathVariable String plate) throws Exception {
         var isDeleted = carService.deleteCar(plate);
