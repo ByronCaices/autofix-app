@@ -13,6 +13,7 @@ import Button from "@mui/material/Button";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import BuildRoundedIcon from '@mui/icons-material/BuildRounded';
 
 const RepairDetails = () => {
   const [repairs, setRepairs] = useState([]);
@@ -55,9 +56,9 @@ const RepairDetails = () => {
         <Button
           variant="contained"
           color="primary"
-          startIcon={<PersonAddIcon />}
+          startIcon={<BuildRoundedIcon />}
         >
-          Add Repair
+          Edit Repair
         </Button>
       </Link>
       <br /> <br />
@@ -137,7 +138,9 @@ const RepairDetails = () => {
               <TableCell align="right">+{repair.iva}</TableCell>
               <TableCell align="right"  sx={{ fontWeight: "bold" }}>${repair.totalAmount}</TableCell>
               <TableCell align="right">{repair.checkinDate ? format(new Date(repair.checkinDate), 'yyyy/MM/dd - HH:mm') : '-'}</TableCell>
-              <TableCell align="right">{repair.finishtDate ? format(new Date(repair.finishtDate), 'yyyy/MM/dd - HH:mm') : '-'}</TableCell>
+              <TableCell align="right">
+                {repair.finishtDate ? format(new Date(repair.finishtDate), 'yyyy/MM/dd - HH:mm') : '-'}
+                </TableCell>
               <TableCell align="right">{repair.checkoutDate ? format(new Date(repair.checkoutDate), 'yyyy/MM/dd - HH:mm') : '-'}</TableCell>
               <TableCell align="right">{repair.mileage}</TableCell>
               <TableCell align="right">{repair.repairCode}</TableCell>

@@ -17,11 +17,11 @@ const getByBrand = brand => {
 }
 
 const create = data => {
-    return httpClient.post('/api/v1/cars/', data)
+    return httpClient.post('/api/v1/repairs/', data)
 }
 
 const update = data => {
-    return httpClient.put('/api/v1/cars/updt', data)
+    return httpClient.put('/api/v1/repairs/', data)
 }
 
 const remove = id => {

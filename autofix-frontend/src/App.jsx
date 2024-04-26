@@ -7,6 +7,7 @@ import CarList from './components/CarsList';
 import AddEditCar from './components/AddEditCar';
 import RepairList from './components/RepairsList';
 import RepairDetails from './components/RepairDetails';
+import EditRepair from './components/EditRepair';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="/car/add" element={<AddEditCar/>} />
               <Route path="/repair/list" element={<RepairList/>} />
               <Route path="/repair/list/:repairCode" element={<RepairDetails/>} />
+              <Route path="/repair/edit/:id" element={<EditRepair/>} />
               
             </Routes>
           </div>

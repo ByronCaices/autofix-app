@@ -32,7 +32,13 @@ public class RepairService {
         this.repairRepository = repairRepository;
     }
 
-    public ArrayList<RepairEntity> getRepairs(){ return (ArrayList<RepairEntity>) repairRepository.findAll(); }
+    public ArrayList<RepairEntity> getRepairs(){
+        return (ArrayList<RepairEntity>) repairRepository.findAllOrderByCheckinDate();
+    }
+
+    public RepairEntity updateRepair(RepairEntity repair){
+        return repairRepository.save(repair);
+    }
 
     public RepairEntity getById(Long id) {
         return repairRepository.findById(id).orElse(null);

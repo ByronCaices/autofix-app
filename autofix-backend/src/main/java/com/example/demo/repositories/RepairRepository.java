@@ -17,10 +17,14 @@ public interface RepairRepository extends JpaRepository<RepairEntity,Long> {
     public List<RepairEntity> findByEngine(String engine);
     public Integer countByPlate(String plate);
 
-    @Query(value="SELECT COUNT(*)\n" +
+    @Query(value = "SELECT * FROM repairs ORDER BY checkin_date DESC", nativeQuery = true)
+    public List<RepairEntity> findAllOrderByCheckinDate();
+
+    @Query(value="SELECT count(*)\n" +
             "FROM repairs\n" +
             "WHERE\n" +
-            "    finish_date >= CURRENT_DATE - INTERVAL '12 months'\n" +
+            "    checkin_date >= CURRENT_DATE - INTERVAL '12 months'\n" +
+            "    AND checkin_date < CURRENT_DATE\n" +
             "    AND plate = :plate", nativeQuery = true)
     public Integer countByPlateLastYear(@Param("plate")String plate);
 
@@ -42,11 +46,13 @@ public interface RepairRepository extends JpaRepository<RepairEntity,Long> {
             "ORDER BY SUM(total_amount) DESC, repair_type, engine", nativeQuery = true)
     List<Object[]> getRepairTypeAmountsByEngine();
 
-    @Query(value = "SELECT * FROM REPAIRS WHERE repair_code = :repair_code", nativeQuery = true)
+    @Query(value = "SELECT * FROM REPAIRS WHERE repair_code = :repair_code ORDER BY total_amount ASC", nativeQuery = true)
     public List<RepairEntity> findByRepairCode(@Param("repair_code") String repair_code);
 
     @Query(value = "SELECT sum(total_amount) FROM REPAIRS where repair_code = :repair_code", nativeQuery = true)
     public float sumTotalAmountByRepairCode(@Param("repair_code") String repair_code);
+
+
 
 
 }

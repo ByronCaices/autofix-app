@@ -13,6 +13,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CallMadeRoundedIcon from '@mui/icons-material/CallMadeRounded';
+import BuildRoundedIcon from '@mui/icons-material/BuildRounded';
 
 const RepairList = () => {
   const [repairs, setRepairs] = useState([]);
@@ -64,6 +65,11 @@ const RepairList = () => {
   const handleRepairDetails = (repairCode) => {
     console.log("HandleRepairDetails", repairCode);
     navigate(`/repair/list/${repairCode}`);
+  };
+
+  const handleEdit = (id) => {
+    console.log("HandleRepairDetails", id);
+    navigate(`/repair/edit/${id}`);
   };
 
   return (
@@ -143,13 +149,13 @@ const RepairList = () => {
 
                 <Button
                   variant="contained"
-                  color="error"
+                  color="info"
                   size="small"
-                  onClick={() => handleDelete(repair.repairCode)}
+                  onClick={() => handleEdit(repair.id)}
                   style={{ marginLeft: "0.5rem" }}
-                  startIcon={<DeleteIcon />}
+                  startIcon={<BuildRoundedIcon />}
                 >
-                  Delete
+                  Edit
                 </Button>
               </TableCell>
             </TableRow>

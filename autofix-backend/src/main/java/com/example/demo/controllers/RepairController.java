@@ -64,6 +64,13 @@ public class RepairController {
         return ResponseEntity.ok(repairUpdated);
     }
 
+    @PutMapping("/")
+    public ResponseEntity<RepairEntity> updateRepair(@RequestBody RepairEntity repair){
+        RepairEntity repairUpdated = repairService.updateRepair(repair);
+        return ResponseEntity.ok(repairUpdated);
+    }
+
+
     @PutMapping("/calcFinalPrice/{id}")
     public ResponseEntity<RepairEntity> updateRepair(@PathVariable Long id){
         RepairEntity repairUpdated = repairService.addSurchPickupDelay(id);
