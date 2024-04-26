@@ -14,7 +14,6 @@ public interface RepairRepository extends JpaRepository<RepairEntity,Long> {
     public List<RepairEntity> findByPlate(String plate);
     public List<RepairEntity> findByBodywork(String bodywork);
     public List<RepairEntity> findByRepairType(Integer repairType);
-    public List<RepairEntity> findByEngine(String engine);
     public Integer countByPlate(String plate);
 
     @Query(value = "SELECT * FROM repairs ORDER BY checkin_date DESC", nativeQuery = true)

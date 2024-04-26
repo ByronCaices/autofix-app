@@ -99,4 +99,10 @@ public class RepairController {
         return ResponseEntity.ok(totalAmount);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<RepairEntity> getRepairById(@PathVariable Long id) {
+        RepairEntity repair = repairService.getById(id);
+        return ResponseEntity.ok(repair);
+    }
+
 }

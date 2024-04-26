@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import repairService from "../services/car.service";
+import repairService from "../services/repair.service";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import SaveIcon from "@mui/icons-material/Save";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+//import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 const EditRepair = () => {
   const { id } = useParams();
@@ -25,19 +29,19 @@ const EditRepair = () => {
   const [surchCarmileage, setSurchCarmileage] = useState("");
   const [surchDelay, setSurchDelay] = useState("");
   const [checkinDate, setCheckinDate] = useState("");
-  const [finishtDate, setFinishtDate] = useState("");
+  const [finishDate, setFinishDate] = useState("");
   const [checkoutDate, setCheckoutDate] = useState("");
   const [iva, setIva] = useState("");
   const [totalAmount, setTotalAmount] = useState("");
-
+  const [titleRepairForm, setTitleRepairForm] = useState("");
   const navigate = useNavigate();
 
+
   const saveRepair = (e) => {
+
     e.preventDefault();
-    
-    console.log("1.Save Car Plate: ", plateState);
-    
-    const car = { id, repairPrice, repairType, repairCode, plate, bodywork, engine, brand, model, mileage, discRegClient, discMonThu, discBonus, surchCarage, surchCarmileage, surchDelay, iva, totalAmount };
+    console.log("1.Save Repair id: ", id);
+    const repair = { id, repairPrice, repairType, repairCode, plate, bodywork, engine, brand, model, mileage, discRegClient, discMonThu, discBonus, surchCarage, surchCarmileage, surchDelay, checkinDate, finishDate: finishDate, checkoutDate, iva, totalAmount };
     if (id) {
       //Actualizar Datos 
       repairService
@@ -62,7 +66,7 @@ const EditRepair = () => {
           navigate("/repair/list");
         })
         .catch((error) => {
-          console.log(car)
+          console.log(repair)
           console.log(
             "An error ocurred while trying tu add new repair.",
             error
@@ -72,30 +76,38 @@ const EditRepair = () => {
   };
 
   useEffect(() => {
-    setPlate(plateState);
-    console.log("Edit Car Plate: ", plateState);
-    if (plateState) {
-      setTitleCarForm("Edit Car");
-      console.log("XXXXXX")
-      
-      //plate=plateState;
-      carService
-        .getByPlate(plateState)
-        .then((car) => {
-          setPlate(car.data.plateState)
-          setBodywork(car.data.bodywork);
-          setBrand(car.data.brand);
-          setEngine(car.data.engine);
-          setModel(car.data.model);
-          setMileage(car.data.mileage);
-          setYear(car.data.year);
-          setSeats(car.data.seats);
+    if (id) {
+      setTitleRepairForm("Edit Repair");
+      console.log("YYYYY")
+      repairService
+        .getById(id)
+        .then((repair) => {
+            setRepairPrice(repair.data.repairPrice);
+            setRepairType(repair.data.repairType);
+            setRepairCode(repair.data.repairCode);
+            setPlate(repair.data.plate);
+            setBodywork(repair.data.bodywork);
+            setEngine(repair.data.engine);
+            setBrand(repair.data.brand);
+            setModel(repair.data.model);
+            setMileage(repair.data.mileage);
+            setDiscRegClient(repair.data.discRegClient);
+            setDiscMonThu(repair.data.discMonThu);
+            setDiscBonus(repair.data.discBonus);
+            setSurchCarage(repair.data.surchCarage);
+            setSurchCarmileage(repair.data.surchCarmileage);
+            setSurchDelay(repair.data.surchDelay);
+            setCheckinDate(repair.data.checkinDate);
+            setFinishDate(repair.data.finishDate);
+            setCheckoutDate(repair.data.checkoutDate);
+            setIva(repair.data.iva);
+            setTotalAmount(repair.data.totalAmount);
         })
         .catch((error) => {
-          console.log("An error ocurred while trying to set car.", error);
+          console.log("An error ocurred while trying to set repair.", error);
         });
     } else {
-      setTitleCarForm("Register New Car");
+      setTitleRepairForm("Register New Repair");
     }
   }, []);
 
@@ -107,116 +119,44 @@ const EditRepair = () => {
       justifyContent="center"
       component="form"
     >
-      <h3> {titleCarForm} </h3>
+      <h3> {titleRepairForm} </h3>
       <hr />
-      <form>
-        <FormControl fullWidth>
-          <TextField
-            id="plate"
-            label="Plate"
-            value={plate}
-            variant="standard"
-            onChange={(e) => setPlate(e.target.value)}
-            helperText="Ej. ABCD12"
-          />
-        </FormControl>
 
-        <FormControl fullWidth>
-          <TextField
-            id="brand"
-            label="Brand"
-            value={brand}
-            variant="standard"
-            onChange={(e) => setBrand(e.target.value)}
-          />
-        </FormControl>
+            <form>
+                <FormControl fullWidth>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DateTimePicker
+                        label="Add repair finish date"
+                        value={finishDate}
+                        onChange={(e) => setFinishDate(e.target.value)}
+                        renderInput={(params) => <TextField {...params} />}
+                    />
+                    </LocalizationProvider>
+                </FormControl>
 
-        <FormControl fullWidth>
-          <TextField
-            id="model"
-            label="Model"
-            value={model}
-            variant="standard"
-            onChange={(e) => setModel(e.target.value)}
-          />
-        </FormControl>
-
-        <FormControl fullWidth>
-          <TextField
-            id="bodywork"
-            label="Bodywork"
-            value={bodywork}
-            variant="standard"
-            onChange={(e) => setBodywork(e.target.value)}
-          />
-        </FormControl>
-
-        <FormControl fullWidth>
-          <TextField
-            id="engine"
-            label="Engine"
-            value={engine}
-            select
-            variant="standard"
-            defaultValue="diesel"
-            onChange={(e) => setEngine(e.target.value)}
-            style={{ width: "25%" }}
-          >
-            <MenuItem value={"diesel"}>diesel</MenuItem>
-            <MenuItem value={"gas"}>gas</MenuItem>
-            <MenuItem value={"electric"}>electric</MenuItem>
-            <MenuItem value={"hybrid"}>hybrid</MenuItem>
-          </TextField>
-        </FormControl>
-
-        <FormControl fullWidth>
-          <TextField
-            id="mileage"
-            label="Mileage"
-            type="number"
-            value={mileage}
-            variant="standard"
-            onChange={(e) => setMileage(e.target.value)}
-          />
-        </FormControl>
-
-        <FormControl fullWidth>
-          <TextField
-            id="year"
-            label="Year"
-            type="number"
-            value={year}
-            variant="standard"
-            onChange={(e) => setYear(e.target.value)}
-          />
-        </FormControl>
-
-        <FormControl fullWidth>
-          <TextField
-            id="seats"
-            label="Seats"
-            type="number"
-            value={seats}
-            variant="standard"
-            onChange={(e) => setSeats(e.target.value)}
-          />
-        </FormControl>
-
-        
-
-        <FormControl>
-          <br />
-          <Button
-            variant="contained"
-            color="info"
-            onClick={(e) => saveCar(e)}
-            style={{ marginLeft: "0.5rem" }}
-            startIcon={<SaveIcon />}
-          >
-            Save
-          </Button>
-        </FormControl>
-      </form>
+                <FormControl fullWidth>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DateTimePicker
+                            label="Add checkout date"
+                            value={checkoutDate}
+                            onChange={(e) => setCheckoutDate(e.target.value)}
+                            renderInput={(params) => <TextField {...params} />}
+                        />
+                    </LocalizationProvider>
+                </FormControl>
+                <FormControl>
+                    <br />
+                    <Button
+                        variant="contained"
+                        color="info"
+                        onClick={saveRepair}
+                        style={{ marginLeft: "0.5rem" }}
+                        startIcon={<SaveIcon />}
+                    >
+                        Save
+                    </Button>
+                </FormControl>
+            </form>
       <hr />
       <Link to="/car/list">Back to List</Link>
     </Box>
