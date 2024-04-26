@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import repairService from "../services/repair.service";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -13,23 +13,23 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const RepairList = () => {
+const RepairDetails = () => {
   const [repairs, setRepairs] = useState([]);
-
-
+  const { repairCode } = useParams();
 
   const navigate = useNavigate();
 
   const init = () => {
+    console.log("RepairCode", repairCode);
     repairService
-      .getAll()
+      .getByCode(repairCode)
       .then((response) => {
         console.log("Listing repair details...", response.data);
         setRepairs(response.data);
       })
       .catch((error) => {
         console.log(
-          "An error ocurred while listing cars.",
+          "An error ocurred while listing repair details.",
           error
         );
       });
@@ -39,28 +39,7 @@ const RepairList = () => {
     init();
   }, []);
 
-  const handleDelete = (id) => {
-    console.log("Printing id...", id);
-    const confirmDelete = window.confirm(
-      "Are you sure to delete this repair?"
-    );
-    if (confirmDelete) {
-      repairService
-        .remove(id)
-        .then((response) => {
-          console.log("Repair has been deleted.", response.data);
-          init(); // Reload the list of cars
-        })
-        .catch((error) => {
-          console.log(
-            "An error ocurred while trying to delete the repair.",
-            error
-          );
-        });
-    }
-  };
-
-  const handleRepairDetails = (repairCode) => {
+  const handleCheckout = (repairCode) => {
     console.log("HandleRepairDetails", repairCode);
     navigate(`/repair/list/${repairCode}`);
   };
@@ -93,8 +72,29 @@ const RepairList = () => {
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Repair Type
             </TableCell>
-            <TableCell align="left" sx={{ fontWeight: "bold" }}>
-              Code
+            <TableCell align="right" sx={{ fontWeight: "bold" }}>
+              Total
+            </TableCell>
+            <TableCell align="right" sx={{ fontWeight: "bold" }}>
+              Price
+            </TableCell>
+            <TableCell align="right" sx={{ fontWeight: "bold" }}>
+              Disc Reg Client
+            </TableCell>
+            <TableCell align="right" sx={{ fontWeight: "bold" }}>
+              Disc Mon-Thu
+            </TableCell>
+            <TableCell align="right" sx={{ fontWeight: "bold" }}>
+              Disc bonus
+            </TableCell>
+            <TableCell align="right" sx={{ fontWeight: "bold" }}>
+              Surch Car Age
+            </TableCell>
+            <TableCell align="right" sx={{ fontWeight: "bold" }}>
+              Surch Mileage
+            </TableCell>
+            <TableCell align="right" sx={{ fontWeight: "bold" }}>
+              Surch Delay Pickup
             </TableCell>
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Engine
@@ -108,9 +108,10 @@ const RepairList = () => {
             <TableCell align="right" sx={{ fontWeight: "bold" }}>
               Mileage
             </TableCell>
-            <TableCell align="right" sx={{ fontWeight: "bold" }}>
-              Total
+            <TableCell align="left" sx={{ fontWeight: "bold" }}>
+              Code
             </TableCell>
+            
           </TableRow>
         </TableHead>
         <TableBody>
@@ -122,18 +123,26 @@ const RepairList = () => {
               <TableCell align="left">{repair.id}</TableCell>
               <TableCell align="left">{repair.plate}</TableCell>
               <TableCell align="left">{repair.repairType}</TableCell>
-              <TableCell align="left">{repair.repairCode}</TableCell>
+              <TableCell align="right">{repair.totalAmount}</TableCell>
+              <TableCell align="right">{repair.repairPrice}</TableCell>
+              <TableCell align="left">{repair.discRegClient}</TableCell>
+              <TableCell align="right">{repair.discMonThu}</TableCell>
+              <TableCell align="right">{repair.discBonus}</TableCell>
+              <TableCell align="right">{repair.surchCarage}</TableCell>
+              <TableCell align="right">{repair.surchCarmileage}</TableCell>
+              <TableCell align="right">{repair.surchDelay}</TableCell>
               <TableCell align="right">{repair.engine}</TableCell>
               <TableCell align="right">{repair.bodywork}</TableCell>
               <TableCell align="right">{repair.brand}</TableCell>
               <TableCell align="right">{repair.mileage}</TableCell>
-              <TableCell align="right">{repair.totalAmount}</TableCell>
+              <TableCell align="right">{repair.repairCode}</TableCell>
+              
               <TableCell>
                 <Button
                   variant="contained"
                   color="info"
                   size="small"
-                  onClick={() => handleRepairDetails(repair.repairCode)}
+                  onClick={() => handleRepairDetails(car.plate)}
                   style={{ marginLeft: "0.5rem" }}
                   startIcon={<EditIcon />}
                 >
@@ -159,4 +168,4 @@ const RepairList = () => {
   );
 };
 
-export default RepairList;
+export default RepairDetails;

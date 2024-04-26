@@ -46,11 +46,11 @@ export default function Sidemenu({ open, toggleDrawer }) {
           <ListItemText primary="Cars" />
         </ListItemButton>
 
-        <ListItemButton onClick={() => navigate("/repair/register")}>
+        <ListItemButton onClick={() => navigate("/repair/list")}>
           <ListItemIcon>
             <PrecisionManufacturingOutlinedIcon />
           </ListItemIcon>
-          <ListItemText primary="Register Repair" />
+          <ListItemText primary="Repairs" />
         </ListItemButton> 
 
         <Divider />

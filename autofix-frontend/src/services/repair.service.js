@@ -4,12 +4,16 @@ const getAll = () => {
     return httpClient.get('/api/v1/repairs/')
 }
 
+const getByCode = code => {
+    return httpClient.get(`/api/v1/repairs/code_${code}`)
+}
+
 const getByPlate = plate => {
     return httpClient.get(`/api/v1/cars/${plate}`)
 }
 
 const getByBrand = brand => {
-    return httpClient.get(`/api/v1/cars/brans_${brand}`)
+    return httpClient.get(`/api/v1/cars/brand_${brand}`)
 }
 
 const create = data => {
@@ -24,4 +28,4 @@ const remove = id => {
     return httpClient.delete(`/api/v1/repairs/${id}`)
 }
 
-export default { getAll, getByPlate, getByBrand, create, remove, update}
+export default { getAll, getByPlate, getByCode, getByBrand, create, remove, update}

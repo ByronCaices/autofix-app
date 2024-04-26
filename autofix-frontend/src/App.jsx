@@ -5,6 +5,8 @@ import Home from './components/Home';
 import NotFound from './components/NotFound';
 import CarList from './components/CarsList';
 import AddEditCar from './components/AddEditCar';
+import RepairList from './components/RepairsList';
+import RepairDetails from './components/RepairDetails';
 
 function App() {
   return (
@@ -17,6 +19,9 @@ function App() {
               <Route path="/car/list" element={<CarList/>} />
               <Route path="/car/edit/:plateState" element={<AddEditCar/>} />
               <Route path="/car/add" element={<AddEditCar/>} />
+              <Route path="/repair/list" element={<RepairList/>} />
+              <Route path="/repair/list/:repairCode" element={<RepairDetails/>} />
+              
             </Routes>
           </div>
       </Router>

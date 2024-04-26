@@ -80,7 +80,7 @@ public class RepairController {
         }
     }
 
-    @GetMapping("/repairCode_{repair_code}")
+    @GetMapping("/code_{repair_code}")
     public ResponseEntity<List<RepairEntity>> getRepairsByRepairCode(@PathVariable String repair_code) {
         List<RepairEntity> repairs = repairService.getRepairsByRepairCode(repair_code);
         return ResponseEntity.ok(repairs);
