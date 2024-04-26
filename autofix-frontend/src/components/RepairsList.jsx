@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CallMadeRoundedIcon from '@mui/icons-material/CallMadeRounded';
 
 const RepairList = () => {
   const [repairs, setRepairs] = useState([]);
@@ -84,8 +85,9 @@ const RepairList = () => {
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
+            
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
-              ID
+              Order Code
             </TableCell>
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Plate
@@ -93,9 +95,7 @@ const RepairList = () => {
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Repair Type
             </TableCell>
-            <TableCell align="left" sx={{ fontWeight: "bold" }}>
-              Code
-            </TableCell>
+            
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Engine
             </TableCell>
@@ -119,15 +119,16 @@ const RepairList = () => {
               key={repair.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell align="left">{repair.id}</TableCell>
+              
+              <TableCell align="left">{repair.repairCode}</TableCell>
               <TableCell align="left">{repair.plate}</TableCell>
               <TableCell align="left">{repair.repairType}</TableCell>
-              <TableCell align="left">{repair.repairCode}</TableCell>
+              
               <TableCell align="right">{repair.engine}</TableCell>
               <TableCell align="right">{repair.bodywork}</TableCell>
               <TableCell align="right">{repair.brand}</TableCell>
               <TableCell align="right">{repair.mileage}</TableCell>
-              <TableCell align="right">{repair.totalAmount}</TableCell>
+              <TableCell align="right"  sx={{ fontWeight: "bold" }}>${repair.totalAmount}</TableCell>
               <TableCell>
                 <Button
                   variant="contained"
@@ -135,9 +136,9 @@ const RepairList = () => {
                   size="small"
                   onClick={() => handleRepairDetails(repair.repairCode)}
                   style={{ marginLeft: "0.5rem" }}
-                  startIcon={<EditIcon />}
+                  startIcon={<CallMadeRoundedIcon />}
                 >
-                  Edit
+                  Details
                 </Button>
 
                 <Button

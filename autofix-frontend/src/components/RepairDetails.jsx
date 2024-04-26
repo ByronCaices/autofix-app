@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { format } from "date-fns";
 import repairService from "../services/repair.service";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -72,43 +73,46 @@ const RepairDetails = () => {
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Repair Type
             </TableCell>
-            <TableCell align="right" sx={{ fontWeight: "bold" }}>
-              Total
-            </TableCell>
-            <TableCell align="right" sx={{ fontWeight: "bold" }}>
+            <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Price
             </TableCell>
-            <TableCell align="right" sx={{ fontWeight: "bold" }}>
+            <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Disc Reg Client
             </TableCell>
-            <TableCell align="right" sx={{ fontWeight: "bold" }}>
+            <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Disc Mon-Thu
             </TableCell>
-            <TableCell align="right" sx={{ fontWeight: "bold" }}>
+            <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Disc bonus
             </TableCell>
-            <TableCell align="right" sx={{ fontWeight: "bold" }}>
+            <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Surch Car Age
             </TableCell>
-            <TableCell align="right" sx={{ fontWeight: "bold" }}>
+            <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Surch Mileage
             </TableCell>
-            <TableCell align="right" sx={{ fontWeight: "bold" }}>
+            <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Surch Delay Pickup
             </TableCell>
-            <TableCell align="left" sx={{ fontWeight: "bold" }}>
-              Engine
-            </TableCell>
-            <TableCell align="left" sx={{ fontWeight: "bold" }}>
-              Bodywork
+            <TableCell align="right" sx={{ fontWeight: "bold" }}>
+              IVA(19%)
             </TableCell>
             <TableCell align="right" sx={{ fontWeight: "bold" }}>
-              Brand
+              Subtotal
+            </TableCell>
+            <TableCell align="right" sx={{ fontWeight: "bold" }}>
+              Checkin
+            </TableCell>
+            <TableCell align="right" sx={{ fontWeight: "bold" }}>
+              Repair Done
+            </TableCell>
+            <TableCell align="right" sx={{ fontWeight: "bold" }}>
+              Checkout
             </TableCell>
             <TableCell align="right" sx={{ fontWeight: "bold" }}>
               Mileage
             </TableCell>
-            <TableCell align="left" sx={{ fontWeight: "bold" }}>
+            <TableCell align="right" sx={{ fontWeight: "bold" }}>
               Code
             </TableCell>
             
@@ -123,17 +127,18 @@ const RepairDetails = () => {
               <TableCell align="left">{repair.id}</TableCell>
               <TableCell align="left">{repair.plate}</TableCell>
               <TableCell align="left">{repair.repairType}</TableCell>
-              <TableCell align="right">{repair.totalAmount}</TableCell>
-              <TableCell align="right">{repair.repairPrice}</TableCell>
-              <TableCell align="left">{repair.discRegClient}</TableCell>
-              <TableCell align="right">{repair.discMonThu}</TableCell>
-              <TableCell align="right">{repair.discBonus}</TableCell>
-              <TableCell align="right">{repair.surchCarage}</TableCell>
-              <TableCell align="right">{repair.surchCarmileage}</TableCell>
-              <TableCell align="right">{repair.surchDelay}</TableCell>
-              <TableCell align="right">{repair.engine}</TableCell>
-              <TableCell align="right">{repair.bodywork}</TableCell>
-              <TableCell align="right">{repair.brand}</TableCell>
+              <TableCell align="left">+{repair.repairPrice}</TableCell>
+              <TableCell align="left">-{repair.discRegClient}</TableCell>
+              <TableCell align="left">-{repair.discMonThu}</TableCell>
+              <TableCell align="left">-{repair.discBonus}</TableCell>
+              <TableCell align="left">+{repair.surchCarage}</TableCell>
+              <TableCell align="left">+{repair.surchCarmileage}</TableCell>
+              <TableCell align="left">+{repair.surchDelay}</TableCell>
+              <TableCell align="right">+{repair.iva}</TableCell>
+              <TableCell align="right"  sx={{ fontWeight: "bold" }}>${repair.totalAmount}</TableCell>
+              <TableCell align="right">{repair.checkinDate ? format(new Date(repair.checkinDate), 'yyyy/MM/dd - HH:mm') : '-'}</TableCell>
+              <TableCell align="right">{repair.finishtDate ? format(new Date(repair.finishtDate), 'yyyy/MM/dd - HH:mm') : '-'}</TableCell>
+              <TableCell align="right">{repair.checkoutDate ? format(new Date(repair.checkoutDate), 'yyyy/MM/dd - HH:mm') : '-'}</TableCell>
               <TableCell align="right">{repair.mileage}</TableCell>
               <TableCell align="right">{repair.repairCode}</TableCell>
               
