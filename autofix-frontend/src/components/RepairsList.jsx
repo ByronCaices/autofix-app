@@ -137,7 +137,7 @@ const RepairList = () => {
               <TableCell align="right"  sx={{ fontWeight: "bold" }}>${repair.totalAmount}</TableCell>
               <TableCell>
                 <Button
-                  variant="contained"
+                  variant="outlined"
                   color="info"
                   size="small"
                   onClick={() => handleRepairDetails(repair.repairCode)}
@@ -157,6 +157,14 @@ const RepairList = () => {
                 >
                   Edit
                 </Button>
+                <Button
+                  variant="contained"
+                  color="error"
+                  size="small"
+                  onClick={() => handleDelete(repair.id)}
+                  style={{ marginLeft: "0.5rem" }}
+                  startIcon={<DeleteIcon />}
+                >DEL</Button>
               </TableCell>
             </TableRow>
           ))}
