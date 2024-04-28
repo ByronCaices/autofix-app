@@ -20,8 +20,12 @@ const update = data => {
     return httpClient.put('/api/v1/repairs/', data)
 }
 
+const addfinalprice = id => {
+    return httpClient.put(`/api/v1/repairs/calcFinalPrice/${id}`)
+}
+
 const remove = id => {
     return httpClient.delete(`/api/v1/repairs/${id}`)
 }
 
-export default { getAll, getByCode, getById, create, update, remove }
+export default { getAll, getByCode, getById, create, update, remove, addfinalprice }

@@ -10,7 +10,7 @@ import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import SaveIcon from "@mui/icons-material/Save";
 
-const EditRepair = () => {
+const AddRepair = () => {
   const { id } = useParams();
   const [repairPrice, setRepairPrice] = useState("");
   const [repairType, setRepairType] = useState("");
@@ -239,4 +239,4 @@ const EditRepair = () => {
   );
 };
 
-export default EditRepair;
+export default AddRepair;

@@ -138,9 +138,7 @@ const RepairDetails = () => {
               <TableCell align="right">+{repair.iva}</TableCell>
               <TableCell align="right"  sx={{ fontWeight: "bold" }}>${repair.totalAmount}</TableCell>
               <TableCell align="right">{repair.checkinDate ? format(new Date(repair.checkinDate), 'yyyy/MM/dd - HH:mm') : '-'}</TableCell>
-              <TableCell align="right">
-                {repair.finishtDate ? format(new Date(repair.finishtDate), 'yyyy/MM/dd - HH:mm') : '-'}
-                </TableCell>
+              <TableCell align="right">{repair.finishtDate ? format(new Date(repair.finishtDate), 'yyyy/MM/dd - HH:mm') : '-'}</TableCell>
               <TableCell align="right">{repair.checkoutDate ? format(new Date(repair.checkoutDate), 'yyyy/MM/dd - HH:mm') : '-'}</TableCell>
               <TableCell align="right">{repair.mileage}</TableCell>
               <TableCell align="right">{repair.repairCode}</TableCell>
