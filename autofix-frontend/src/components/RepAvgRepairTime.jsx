@@ -42,7 +42,7 @@ const RepAvgRepairTime = () => {
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell align="left" sx={{ fontWeight: "bold" }}>
+            <TableCell align="center" sx={{ fontWeight: "bold" }}>
               Brand
             </TableCell>
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
@@ -56,7 +56,7 @@ const RepAvgRepairTime = () => {
               key={report[0]}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell align="left">{report[0]}</TableCell>
+              <TableCell align="center">{report[0]}</TableCell>
               <TableCell align="left">{report[1]}</TableCell>
             </TableRow>
           ))}

@@ -18,7 +18,7 @@ export default function Navbar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ bgcolor: "#212121" }}>
         <Toolbar>
           <IconButton
             size="large"
@@ -31,7 +31,17 @@ export default function Navbar() {
             <MenuIcon />
           </IconButton>
 
-          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+
+          <Typography
+            variant="h2"
+            component="div"
+            sx={{
+              flexGrow: 1,
+              fontFamily: '"Bebas Neue", sans-serif', // Especificando la familia de fuente directamente
+              fontWeight: 200,
+              fontStyle: "normal",
+            }}
+          >
             Autofix Workshop: Repairs System Manager
           </Typography>
         </Toolbar>

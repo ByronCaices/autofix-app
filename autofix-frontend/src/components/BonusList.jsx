@@ -14,6 +14,7 @@ import CallMadeRoundedIcon from "@mui/icons-material/CallMadeRounded";
 import NoCrashRoundedIcon from '@mui/icons-material/NoCrashRounded';
 import ConstructionRoundedIcon from '@mui/icons-material/ConstructionRounded';
 import ContactMailRoundedIcon from '@mui/icons-material/ContactMailRounded';
+import MoneyRoundedIcon from '@mui/icons-material/MoneyRounded';
 
 const BonusList = () => {
   const [bonuses, setBonuses] = useState([]);
@@ -63,6 +64,8 @@ const BonusList = () => {
   return (
     <TableContainer component={Paper}>
       <br />
+        <h2>Bonus Discount</h2>
+      <br /> <br />
       <Link
         to="/bonus/add"
         style={{ textDecoration: "none", marginBottom: "1rem" }}
@@ -70,7 +73,7 @@ const BonusList = () => {
         <Button
           variant="contained"
           color="primary"
-          startIcon={<ConstructionRoundedIcon />}
+          startIcon={<MoneyRoundedIcon />}
         >
           Add Bonus
         </Button>

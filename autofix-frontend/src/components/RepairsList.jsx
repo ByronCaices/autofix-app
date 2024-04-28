@@ -67,6 +67,8 @@ const RepairList = () => {
   return (
     <TableContainer component={Paper}>
       <br />
+        <h2>Repairs Register</h2>
+      <br /> <br />
       <Link
         to="/repair/add"
         style={{ textDecoration: "none", marginBottom: "1rem" }}
@@ -126,10 +128,10 @@ const RepairList = () => {
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
                 ${repair.totalAmount}
               </TableCell>
-              <TableCell>
+              <TableCell align="center">
                 <Button
                   variant="outlined"
-                  color="info"
+                  color="inherit"
                   size="small"
                   onClick={() => handleRepairDetails(repair.repairCode)}
                   style={{ marginLeft: "0.5rem" }}
