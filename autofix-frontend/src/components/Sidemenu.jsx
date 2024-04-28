@@ -15,6 +15,7 @@ import HailIcon from "@mui/icons-material/Hail";
 import MedicationLiquidIcon from "@mui/icons-material/MedicationLiquid";
 import MoreTimeIcon from "@mui/icons-material/MoreTime";
 import HomeIcon from "@mui/icons-material/Home";
+import NoteAddRoundedIcon from '@mui/icons-material/NoteAddRounded';
 
 import CarRepairRoundedIcon from '@mui/icons-material/CarRepairRounded';
 import PrecisionManufacturingOutlinedIcon from '@mui/icons-material/PrecisionManufacturingOutlined';
@@ -51,6 +52,13 @@ export default function Sidemenu({ open, toggleDrawer }) {
             <PrecisionManufacturingOutlinedIcon />
           </ListItemIcon>
           <ListItemText primary="Repairs" />
+        </ListItemButton> 
+
+        <ListItemButton onClick={() => navigate("/bonus/list")}>
+          <ListItemIcon>
+            <NoteAddRoundedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Bonus Discounts" />
         </ListItemButton> 
 
         <Divider />

@@ -9,8 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 import SaveIcon from "@mui/icons-material/Save";
 
 const AddEditCar = () => {
-  const { plateState } = useParams();
-  var [plate, setPlate] = useState("");
+  const { plate } = useParams();
   const [bodywork, setBodywork] = useState("");
   const [engine, setEngine] = useState("");
   const [brand, setBrand] = useState("");
@@ -23,16 +22,11 @@ const AddEditCar = () => {
 
   const saveCar = (e) => {
     e.preventDefault();
-    
-    console.log("1.Save Car Plate: ", plateState);
-    
+
     const car = { plate, bodywork, engine, brand, model, mileage, year, seats };
-    console.log(car)
-    setPlate(plateState);
-    console.log("2.Save Car Plate: ", plate);
-    
-    if (plateState) {
-      //Actualizar Datos 
+
+    if (plate) {
+      //Actualizar Datos
       carService
         .update(car)
         .then((response) => {
@@ -41,42 +35,20 @@ const AddEditCar = () => {
         })
         .catch((error) => {
           //console.log(car)
-          console.log(
-            "An error ocurred while trying to update car.",
-            error
-          );
-        });
-    } else {
-      //Crear nuevo
-      
-      carService
-        .create(car)
-        .then((response) => {
-          console.log("Car has been added.", response.data);
-          navigate("/car/list");
-        })
-        .catch((error) => {
-          console.log(car)
-          console.log(
-            "An error ocurred while trying tu add new car.",
-            error
-          );
+          console.log("An error ocurred while trying to update car.", error);
         });
     }
   };
 
   useEffect(() => {
-    setPlate(plateState);
-    console.log("Edit Car Plate: ", plateState);
-    if (plateState) {
+    if (plate) {
       setTitleCarForm("Edit Car");
-      console.log("XXXXXX")
-      
+      console.log("XXXXXX");
+
       //plate=plateState;
       carService
-        .getByPlate(plateState)
+        .getByPlate(plate)
         .then((car) => {
-          setPlate(car.data.plateState)
           setBodywork(car.data.bodywork);
           setBrand(car.data.brand);
           setEngine(car.data.engine);
@@ -88,8 +60,6 @@ const AddEditCar = () => {
         .catch((error) => {
           console.log("An error ocurred while trying to set car.", error);
         });
-    } else {
-      setTitleCarForm("Register New Car");
     }
   }, []);
 
@@ -101,20 +71,10 @@ const AddEditCar = () => {
       justifyContent="center"
       component="form"
     >
-      <h3> {titleCarForm} </h3>
-      <hr />
+      <h2> {titleCarForm} </h2>
+      <br />
+      <h3>Car - {plate}</h3>
       <form>
-        <FormControl fullWidth>
-          <TextField
-            id="plate"
-            label="Plate"
-            value={plate}
-            variant="standard"
-            onChange={(e) => setPlate(e.target.value)}
-            helperText="Ej. ABCD12"
-          />
-        </FormControl>
-
         <FormControl fullWidth>
           <TextField
             id="brand"
@@ -140,9 +100,18 @@ const AddEditCar = () => {
             id="bodywork"
             label="Bodywork"
             value={bodywork}
+            select
             variant="standard"
+            defaultValue="suv"
             onChange={(e) => setBodywork(e.target.value)}
-          />
+            style={{ width: "25%" }}
+          >
+            <MenuItem value={"suv"}>SUV</MenuItem>
+            <MenuItem value={"van"}>VAN</MenuItem>
+            <MenuItem value={"sedan"}>SEDAN</MenuItem>
+            <MenuItem value={"pickup"}>PICKUP</MenuItem>
+            <MenuItem value={"hatckback"}>HATCHBACK</MenuItem>
+          </TextField>
         </FormControl>
 
         <FormControl fullWidth>
@@ -156,10 +125,10 @@ const AddEditCar = () => {
             onChange={(e) => setEngine(e.target.value)}
             style={{ width: "25%" }}
           >
-            <MenuItem value={"diesel"}>diesel</MenuItem>
-            <MenuItem value={"gas"}>gas</MenuItem>
-            <MenuItem value={"electric"}>electric</MenuItem>
-            <MenuItem value={"hybrid"}>hybrid</MenuItem>
+            <MenuItem value={"diesel"}>Diesel</MenuItem>
+            <MenuItem value={"gas"}>Gas</MenuItem>
+            <MenuItem value={"electric"}>Electric</MenuItem>
+            <MenuItem value={"hybrid"}>Hybrid</MenuItem>
           </TextField>
         </FormControl>
 
@@ -195,8 +164,6 @@ const AddEditCar = () => {
             onChange={(e) => setSeats(e.target.value)}
           />
         </FormControl>
-
-        
 
         <FormControl>
           <br />
