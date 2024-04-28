@@ -33,14 +33,11 @@ const EditRepair = () => {
   const [totalAmount, setTotalAmount] = useState("");
   const [titleRepairForm, setTitleRepairForm] = useState("");
 
-  const [timeCheckout, setTimeCheckout] = useState("");
-  const [timeFinish, setTimeFinish] = useState("");
-
   const navigate = useNavigate();
 
   const saveRepair = (e) => {
     e.preventDefault();
-    handleCombineDateTime();
+    
     const repair = {
       id,
       repairPrice,
@@ -91,20 +88,6 @@ const EditRepair = () => {
           );
         });
     }
-  };
-
-  const handleCombineDateTime = () => {
-    const datef = finishDate;
-    const timef = timeFinish;
-
-    const dateTimeString = `${datef}T${timef}`;
-    setFinishDate(dateTimeString);
-
-    const datec = checkoutDate;
-    const timec = timeCheckout;
-
-    const dateTimeStringc = `${datec}T${timec}`;
-    setCheckoutDate(dateTimeStringc);
   };
 
   useEffect(() => {
@@ -169,7 +152,7 @@ const EditRepair = () => {
           <TextField
             id="finishdate"
             label="Repair Done Date"
-            type="date"
+            type="datetime-local"
             value={finishDate}
             variant="standard"
             onChange={(e) => setFinishDate(e.target.value)}
@@ -179,43 +162,13 @@ const EditRepair = () => {
 
         <FormControl fullWidth>
           <TextField
-            id="finishTime"
-            label="Finish Time"
-            type="time"
-            value={timeFinish}
-            variant="standard"
-            onChange={(e) => setTimeFinish(e.target.value)}
-            InputLabelProps={{ shrink: true }}
-            inputProps={{
-              step: 60, // 5 minutos
-            }}
-          />
-        </FormControl>
-
-        <FormControl fullWidth>
-          <TextField
             id="checkoutdate"
             label="Checkout Date"
-            type="date"
+            type="datetime-local"
             value={checkoutDate}
             variant="standard"
             onChange={(e) => setCheckoutDate(e.target.value)}
             InputLabelProps={{ shrink: true }} // Esto asegura que la etiqueta no se superponga con la fecha seleccionada
-          />
-        </FormControl>
-
-        <FormControl fullWidth>
-          <TextField
-            id="checkouttime"
-            label="Checkout Time"
-            type="time"
-            value={timeCheckout}
-            variant="standard"
-            onChange={(e) => setTimeCheckout(e.target.value)}
-            InputLabelProps={{ shrink: true }}
-            inputProps={{
-              step: 60, // 5 minutos
-            }}
           />
         </FormControl>
 

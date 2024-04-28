@@ -8,6 +8,7 @@ import AddEditCar from './components/AddEditCar';
 import RepairList from './components/RepairsList';
 import RepairDetails from './components/RepairDetails';
 import EditRepair from './components/EditRepair';
+import AddRepair from './components/AddRepair';
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
               <Route path="/repair/list" element={<RepairList/>} />
               <Route path="/repair/list/:repairCode" element={<RepairDetails/>} />
               <Route path="/repair/edit/:id" element={<EditRepair/>} />
+              <Route path="/repair/add" element={<AddRepair/>} />
+
+
               
             </Routes>
           </div>

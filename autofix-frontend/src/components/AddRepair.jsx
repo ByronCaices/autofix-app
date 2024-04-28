@@ -4,11 +4,12 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import repairService from "../services/repair.service";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { format } from "date-fns";
+import { format, set } from "date-fns";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import SaveIcon from "@mui/icons-material/Save";
+import dayjs from "dayjs";
 
 const AddRepair = () => {
   const { id } = useParams();
@@ -20,29 +21,29 @@ const AddRepair = () => {
   const [engine, setEngine] = useState("");
   const [brand, setBrand] = useState("");
   const [mileage, setMileage] = useState("");
-  const [discRegClient, setDiscRegClient] = useState("");
-  const [discMonThu, setDiscMonThu] = useState("");
-  const [discBonus, setDiscBonus] = useState("");
-  const [surchCarage, setSurchCarage] = useState("");
-  const [surchCarmileage, setSurchCarmileage] = useState("");
-  const [surchDelay, setSurchDelay] = useState("");
+  const [discRegClient, setDiscRegClient] = useState(0);
+  const [discMonThu, setDiscMonThu] = useState(0);
+  const [discBonus, setDiscBonus] = useState(0);
+  const [surchCarage, setSurchCarage] = useState(0);
+  const [surchCarmileage, setSurchCarmileage] = useState(0);
+  const [surchDelay, setSurchDelay] = useState(0);
   const [checkinDate, setCheckinDate] = useState("");
   const [finishDate, setFinishDate] = useState("");
   const [checkoutDate, setCheckoutDate] = useState("");
-  const [iva, setIva] = useState("");
-  const [totalAmount, setTotalAmount] = useState("");
+  const [iva, setIva] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
   const [titleRepairForm, setTitleRepairForm] = useState("");
 
-  const [timeCheckout, setTimeCheckout] = useState("");
-  const [timeFinish, setTimeFinish] = useState("");
+
 
   const navigate = useNavigate();
 
   const saveRepair = (e) => {
     e.preventDefault();
-    handleCombineDateTime();
+    console.log("SAVE");
+   
+
     const repair = {
-      id,
       repairPrice,
       repairType,
       repairCode,
@@ -63,83 +64,32 @@ const AddRepair = () => {
       iva,
       totalAmount,
     };
-    if (id) {
-      //Actualizar Datos
-      repairService
-        .update(repair)
-        .then((response) => {
-          console.log("Repair ha sido actualizado.", response.data);
-          navigate("/repair/list");
-        })
-        .catch((error) => {
-          console.log("An error ocurred while trying to update repair.", error);
-        });
-      repairService.addfinalprice(id);
-    } else {
-      //Crear nuevo
-      repairService
-        .create(repair)
-        .then((response) => {
-          console.log("Repair has been added.", response.data);
-          navigate("/repair/list");
-        })
-        .catch((error) => {
-          console.log(repair);
-          console.log(
-            "An error ocurred while trying tu add new repair.",
-            error
-          );
-        });
-    }
+
+    console.log("RRRRRRR")
+    console.log(repair);
+
+    repairService
+      .create(repair)
+      .then((response) => {
+        console.log("Repair has been added.", response.data);
+        navigate("/repair/list");
+      })
+      .catch((error) => {
+        console.log(repair);
+        console.log(":(\nAn error ocurred while trying tu add new repair.", error);
+        window.alert("An error ocurred while trying tu add new repair. Check if your vehicle is registered in the system.");
+      });
   };
 
-  const handleCombineDateTime = () => {
-    const datef = finishDate;
-    const timef = timeFinish;
-
-    const dateTimeString = `${datef}T${timef}`;
-    setFinishDate(dateTimeString);
-
-    const datec = checkoutDate;
-    const timec = timeCheckout;
-
-    const dateTimeStringc = `${datec}T${timec}`;
-    setCheckoutDate(dateTimeStringc);
-  };
 
   useEffect(() => {
-    if (id) {
-      setTitleRepairForm("Add Dates of Repair Done & Checkout");
-      console.log("Edit Repair getting repair...");
-      repairService
-        .getById(id)
-        .then((repair) => {
-          setRepairPrice(repair.data.repairPrice);
-          setRepairType(repair.data.repairType);
-          setRepairCode(repair.data.repairCode);
-          setPlate(repair.data.plate);
-          setBodywork(repair.data.bodywork);
-          setEngine(repair.data.engine);
-          setBrand(repair.data.brand);
-          setMileage(repair.data.mileage);
-          setDiscRegClient(repair.data.discRegClient);
-          setDiscMonThu(repair.data.discMonThu);
-          setDiscBonus(repair.data.discBonus);
-          setSurchCarage(repair.data.surchCarage);
-          setSurchCarmileage(repair.data.surchCarmileage);
-          setSurchDelay(repair.data.surchDelay);
-          setCheckinDate(repair.data.checkinDate);
-          setFinishDate(repair.data.finishDate);
-          setCheckoutDate(repair.data.checkoutDate);
-          setIva(repair.data.iva);
-          setTotalAmount(repair.data.totalAmount);
-        })
-        .catch((error) => {
-          console.log("An error ocurred while trying to set repair.", error);
-        });
-    } else {
-      setTitleRepairForm("Register New Repair");
-    }
+    // repair code is the concatenation of plate and mileage
+    //setRepairCode(plate + mileage);
+    // save checkin datetime
+    setCheckinDate(dayjs());  
+    console.log("useEffect");
+    setTitleRepairForm("Register New Repair");
+    
   }, []);
 
   return (
@@ -150,73 +100,53 @@ const AddRepair = () => {
       justifyContent="center"
       component="form"
     >
-      <h2> {titleRepairForm} </h2>
-      <hr />
-
-      <h4> Plate: {plate} </h4>
-
-      <ul>
-        <li> Bodywork: {bodywork} </li>
-        <li> Engine: {engine} </li>
-        <li> Brand: {brand} </li>
-        <li> Mileage: {mileage} </li>
-        <li> Repair Type: {repairType}</li>
-        <li> Repair Price: {repairPrice} </li>
-      </ul>
-
+      <h2>{titleRepairForm}</h2>
+      Make sure the car is registered in the system to add a repair.
       <form>
         <FormControl fullWidth>
           <TextField
-            id="finishdate"
-            label="Repair Done Date"
-            type="date"
-            value={finishDate}
+            id="plate"
+            label="Plate"
+            value={plate}
             variant="standard"
-            onChange={(e) => setFinishDate(e.target.value)}
-            InputLabelProps={{ shrink: true }} // Esto asegura que la etiqueta no se superponga con la fecha seleccionada
+            onChange={(e) => setPlate(e.target.value)}
           />
         </FormControl>
 
         <FormControl fullWidth>
           <TextField
-            id="finishTime"
-            label="Finish Time"
-            type="time"
-            value={timeFinish}
+            id="mileage"
+            label="Mileage"
+            type="number"
+            value={mileage}
             variant="standard"
-            onChange={(e) => setTimeFinish(e.target.value)}
-            InputLabelProps={{ shrink: true }}
-            inputProps={{
-              step: 60, // 5 minutos
-            }}
+            onChange={(e) => setMileage(e.target.value)}
           />
         </FormControl>
 
         <FormControl fullWidth>
           <TextField
-            id="checkoutdate"
-            label="Checkout Date"
-            type="date"
-            value={checkoutDate}
+            id="repairtype"
+            label="Repair Type"
+            value={repairType}
+            select
             variant="standard"
-            onChange={(e) => setCheckoutDate(e.target.value)}
-            InputLabelProps={{ shrink: true }} // Esto asegura que la etiqueta no se superponga con la fecha seleccionada
-          />
-        </FormControl>
-
-        <FormControl fullWidth>
-          <TextField
-            id="checkouttime"
-            label="Checkout Time"
-            type="time"
-            value={timeCheckout}
-            variant="standard"
-            onChange={(e) => setTimeCheckout(e.target.value)}
-            InputLabelProps={{ shrink: true }}
-            inputProps={{
-              step: 60, // 5 minutos
-            }}
-          />
+            defaultValue="diesel"
+            onChange={(e) => setRepairType(e.target.value)}
+            style={{ width: "25%" }}
+          >
+            <MenuItem value={1}>1. Brake System</MenuItem>
+            <MenuItem value={2}>2. Cooling System</MenuItem>
+            <MenuItem value={3}>3. Engine Repairs</MenuItem>
+            <MenuItem value={4}>4. Transmission Repairs</MenuItem>
+            <MenuItem value={5}>5. Electrical System</MenuItem>
+            <MenuItem value={6}>6. Exhaust System</MenuItem>
+            <MenuItem value={7}>7. Tire & Wheel Repairs</MenuItem>
+            <MenuItem value={8}>8. Suspension & Steering Repairs</MenuItem>
+            <MenuItem value={9}>9. A/C and Heating System</MenuItem>
+            <MenuItem value={10}>10. Fuel System</MenuItem>
+            <MenuItem value={11}>11. Windshield and Glass Replacement</MenuItem>
+          </TextField>
         </FormControl>
 
         <FormControl>

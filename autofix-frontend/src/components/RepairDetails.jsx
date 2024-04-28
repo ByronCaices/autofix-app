@@ -9,11 +9,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import BuildRoundedIcon from "@mui/icons-material/BuildRounded";
 
 const RepairDetails = () => {
   const [repairs, setRepairs] = useState([]);
@@ -23,11 +18,9 @@ const RepairDetails = () => {
   const navigate = useNavigate();
 
   const handleTotalAmount = (repairCode) => {
-    repairService
-      .getTotalAmount(repairCode)
-      .then((response) => {
-        console.log("Total Amount...", response.data);
-        setTotalAmount(response.data);
+    repairService.getTotalAmount(repairCode).then((response) => {
+      console.log("Total Amount...", response.data);
+      setTotalAmount(response.data);
     });
   };
 
@@ -51,21 +44,9 @@ const RepairDetails = () => {
 
   return (
     <TableContainer component={Paper}>
+      <br />
       <h2>Repair Order #{repairCode}</h2>
       <br />
-      <Link
-        to="/repair/add"
-        style={{ textDecoration: "none", marginBottom: "1rem" }}
-      >
-        <Button
-          variant="contained"
-          color="primary"
-          startIcon={<BuildRoundedIcon />}
-        >
-          Edit Repair
-        </Button>
-      </Link>
-      <br /> <br />
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
@@ -81,7 +62,7 @@ const RepairDetails = () => {
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Price
             </TableCell>
-            <TableCell align="right" sx={{ fontWeight: "bold" }}>
+            <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Mileage
             </TableCell>
             <TableCell align="right" sx={{ fontWeight: "bold" }}>
@@ -99,8 +80,8 @@ const RepairDetails = () => {
               <TableCell align="left">{repair.plate}</TableCell>
               <TableCell align="left">{repair.repairType}</TableCell>
               <TableCell align="left">+{repair.repairPrice}</TableCell>
-              <TableCell align="right">{repair.mileage}</TableCell>
-              <TableCell align="right">{repair.repairCode}</TableCell>
+              <TableCell align="left">{repair.mileage} km.</TableCell>
+              <TableCell align="right">#{repair.repairCode}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -108,7 +89,6 @@ const RepairDetails = () => {
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Disc Reg Client
             </TableCell>
@@ -127,7 +107,7 @@ const RepairDetails = () => {
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Surch Delay Pickup
             </TableCell>
-            <TableCell align="right" sx={{ fontWeight: "bold" }}>
+            <TableCell align="left" sx={{ fontWeight: "bold" }}>
               IVA(19%)
             </TableCell>
             <TableCell align="right" sx={{ fontWeight: "bold" }}>
@@ -141,28 +121,23 @@ const RepairDetails = () => {
               key={repair.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              
               <TableCell align="left">-{repair.discRegClient}</TableCell>
               <TableCell align="left">-{repair.discMonThu}</TableCell>
               <TableCell align="left">-{repair.discBonus}</TableCell>
               <TableCell align="left">+{repair.surchCarage}</TableCell>
-              <TableCell align="left">+{repair.surchCarmileage}</TableCell>
+              <TableCell align="left">+{repair.surchMileage}</TableCell>
               <TableCell align="left">+{repair.surchDelay}</TableCell>
-              <TableCell align="right">+{repair.iva}</TableCell>
+              <TableCell align="left">+{repair.iva}</TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
                 ${repair.totalAmount}
               </TableCell>
-              
             </TableRow>
           ))}
         </TableBody>
       </Table>
-
-
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Checkin Date
             </TableCell>
@@ -180,33 +155,29 @@ const RepairDetails = () => {
               key={repair.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              
-              
-              <TableCell align="right">
+              <TableCell align="left">
                 {repair.checkinDate
                   ? format(new Date(repair.checkinDate), "yyyy/MM/dd - HH:mm")
                   : "-"}
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="left">
                 {repair.finishDate
                   ? format(new Date(repair.finishDate), "yyyy/MM/dd - HH:mm")
                   : "-"}
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="left">
                 {repair.checkoutDate
                   ? format(new Date(repair.checkoutDate), "yyyy/MM/dd - HH:mm")
                   : "-"}
               </TableCell>
-              
             </TableRow>
           ))}
         </TableBody>
       </Table>
       <h2>Total: ${totalAmount}</h2>
       <Link to="/repair/list">Back to List</Link>
+      
     </TableContainer>
-    
-    
   );
 };
 

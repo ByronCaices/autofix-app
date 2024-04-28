@@ -9,16 +9,13 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import CallMadeRoundedIcon from '@mui/icons-material/CallMadeRounded';
-import BuildRoundedIcon from '@mui/icons-material/BuildRounded';
+import CallMadeRoundedIcon from "@mui/icons-material/CallMadeRounded";
+import NoCrashRoundedIcon from '@mui/icons-material/NoCrashRounded';
+import ConstructionRoundedIcon from '@mui/icons-material/ConstructionRounded';
 
 const RepairList = () => {
   const [repairs, setRepairs] = useState([]);
-
-
 
   const navigate = useNavigate();
 
@@ -30,10 +27,7 @@ const RepairList = () => {
         setRepairs(response.data);
       })
       .catch((error) => {
-        console.log(
-          "An error ocurred while listing cars.",
-          error
-        );
+        console.log("An error ocurred while listing cars.", error);
       });
   };
 
@@ -43,9 +37,7 @@ const RepairList = () => {
 
   const handleDelete = (id) => {
     console.log("Printing id...", id);
-    const confirmDelete = window.confirm(
-      "Are you sure to delete this repair?"
-    );
+    const confirmDelete = window.confirm("Are you sure to delete this repair?");
     if (confirmDelete) {
       repairService
         .remove(id)
@@ -82,7 +74,7 @@ const RepairList = () => {
         <Button
           variant="contained"
           color="primary"
-          startIcon={<PersonAddIcon />}
+          startIcon={<ConstructionRoundedIcon />}
         >
           Add Repair
         </Button>
@@ -91,7 +83,6 @@ const RepairList = () => {
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Order Code
             </TableCell>
@@ -101,7 +92,6 @@ const RepairList = () => {
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Repair Type
             </TableCell>
-            
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Engine
             </TableCell>
@@ -125,16 +115,17 @@ const RepairList = () => {
               key={repair.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              
               <TableCell align="left">{repair.repairCode}</TableCell>
               <TableCell align="left">{repair.plate}</TableCell>
               <TableCell align="left">{repair.repairType}</TableCell>
-              
+
               <TableCell align="right">{repair.engine}</TableCell>
               <TableCell align="right">{repair.bodywork}</TableCell>
               <TableCell align="right">{repair.brand}</TableCell>
               <TableCell align="right">{repair.mileage}</TableCell>
-              <TableCell align="right"  sx={{ fontWeight: "bold" }}>${repair.totalAmount}</TableCell>
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                ${repair.totalAmount}
+              </TableCell>
               <TableCell>
                 <Button
                   variant="outlined"
@@ -153,9 +144,9 @@ const RepairList = () => {
                   size="small"
                   onClick={() => handleEdit(repair.id)}
                   style={{ marginLeft: "0.5rem" }}
-                  startIcon={<BuildRoundedIcon />}
+                  startIcon={<NoCrashRoundedIcon />}
                 >
-                  Edit
+                  Checkout
                 </Button>
                 <Button
                   variant="contained"
@@ -164,7 +155,9 @@ const RepairList = () => {
                   onClick={() => handleDelete(repair.id)}
                   style={{ marginLeft: "0.5rem" }}
                   startIcon={<DeleteIcon />}
-                >DEL</Button>
+                >
+                  DEL
+                </Button>
               </TableCell>
             </TableRow>
           ))}
