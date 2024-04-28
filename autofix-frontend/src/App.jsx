@@ -12,6 +12,9 @@ import AddRepair from "./components/AddRepair";
 import BonusList from "./components/BonusList";
 import AddEditBonus from "./components/AddEditBonus";
 import AddCar from "./components/AddCar";
+import RepTypeBodywork from "./components/RepTypeBodywork";
+import RepTypeEngine from "./components/RepTypeEngine";
+import RepAvgRepairTime from "./components/RepAvgRepairTime";
 
 function App() {
   return (
@@ -31,6 +34,9 @@ function App() {
           <Route path="/bonus/list" element={<BonusList />} />
           <Route path="/bonus/edit/:id" element={<AddEditBonus />} />
           <Route path="/bonus/add" element={<AddEditBonus />} />
+          <Route path="/report/type&bodywork" element={<RepTypeBodywork />} />
+          <Route path="/report/type&engine" element={<RepTypeEngine />} />
+          <Route path="/report/avgRepairTime" element={<RepAvgRepairTime />} />
         </Routes>
       </div>
     </Router>

@@ -32,4 +32,18 @@ const getTotalAmount = (repairCode) => {
     return httpClient.get(`/api/v1/repairs/totalAmount_${repairCode}`)
 }
 
-export default { getAll, getByCode, getById, create, update, remove, addfinalprice, getTotalAmount }
+const getReportBodywork = () => {
+    return httpClient.get('/api/v1/repairs/repairTypeAmounts')
+}
+
+const getReportEngine = () => {
+    return httpClient.get('/api/v1/repairs/repairTypeAmountsByEngine')
+}
+
+const getReportAvgTime = () => {
+    return httpClient.get('/api/v1/repairs/averageRepairTimeByBrand')
+}
+
+
+
+export default { getAll, getByCode, getById, create, update, remove, addfinalprice, getTotalAmount, getReportBodywork, getReportEngine, getReportAvgTime}

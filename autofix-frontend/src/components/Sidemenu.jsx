@@ -15,21 +15,18 @@ import HailIcon from "@mui/icons-material/Hail";
 import MedicationLiquidIcon from "@mui/icons-material/MedicationLiquid";
 import MoreTimeIcon from "@mui/icons-material/MoreTime";
 import HomeIcon from "@mui/icons-material/Home";
-import NoteAddRoundedIcon from '@mui/icons-material/NoteAddRounded';
-
-import CarRepairRoundedIcon from '@mui/icons-material/CarRepairRounded';
-import PrecisionManufacturingOutlinedIcon from '@mui/icons-material/PrecisionManufacturingOutlined';
-import PlaylistAddCheckCircleRoundedIcon from '@mui/icons-material/PlaylistAddCheckCircleRounded'; //calcular monto final
+import NoteAddRoundedIcon from "@mui/icons-material/NoteAddRounded";
+import AlarmOnRoundedIcon from "@mui/icons-material/AlarmOnRounded";
+import CarRepairRoundedIcon from "@mui/icons-material/CarRepairRounded";
+import PrecisionManufacturingOutlinedIcon from "@mui/icons-material/PrecisionManufacturingOutlined";
+import PlaylistAddCheckCircleRoundedIcon from "@mui/icons-material/PlaylistAddCheckCircleRounded"; //calcular monto final
 import { useNavigate } from "react-router-dom";
 
 export default function Sidemenu({ open, toggleDrawer }) {
   const navigate = useNavigate();
 
   const listOptions = () => (
-    <Box
-      role="presentation"
-      onClick={toggleDrawer(false)}
-    >
+    <Box role="presentation" onClick={toggleDrawer(false)}>
       <List>
         <ListItemButton onClick={() => navigate("/home")}>
           <ListItemIcon>
@@ -52,25 +49,32 @@ export default function Sidemenu({ open, toggleDrawer }) {
             <PrecisionManufacturingOutlinedIcon />
           </ListItemIcon>
           <ListItemText primary="Repairs" />
-        </ListItemButton> 
+        </ListItemButton>
 
         <ListItemButton onClick={() => navigate("/bonus/list")}>
           <ListItemIcon>
             <NoteAddRoundedIcon />
           </ListItemIcon>
           <ListItemText primary="Bonus Discounts" />
-        </ListItemButton> 
+        </ListItemButton>
 
         <Divider />
 
-        <ListItemButton onClick={() => navigate("/paycheck/calculate")}>
+        <ListItemButton onClick={() => navigate("/report/avgRepairTime")}>
+          <ListItemIcon>
+            <AlarmOnRoundedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Average Repair Time" />
+        </ListItemButton>
+
+        <ListItemButton onClick={() => navigate("/report/type&bodywork")}>
           <ListItemIcon>
             <CalculateIcon />
           </ListItemIcon>
           <ListItemText primary="Repair Type By Bodywork" />
         </ListItemButton>
 
-        <ListItemButton onClick={() => navigate("/reports/AnualReport")}>
+        <ListItemButton onClick={() => navigate("/report/type&engine")}>
           <ListItemIcon>
             <AnalyticsIcon />
           </ListItemIcon>
