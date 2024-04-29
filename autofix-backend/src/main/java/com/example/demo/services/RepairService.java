@@ -45,22 +45,6 @@ public class RepairService {
         return repairRepository.findById(id).orElse(null);
     }
 
-    public List<RepairEntity> getRepairsByRepairType(Integer repair_type) {
-        return repairRepository.findByRepairType(repair_type);
-    }
-
-    public List<RepairEntity> getRepairsByPlate(String plate) {
-        return repairRepository.findByPlate(plate);
-    }
-
-    public List<RepairEntity> getRepairsByBodywork(String bodywork) {
-        return repairRepository.findByBodywork(bodywork);
-    }
-
-    public Integer countByPlate(String plate) {
-        return repairRepository.countByPlateLastYear(plate);
-    }
-
     public List<Object[]> getRepairTypeAmounts() {
         return repairRepository.getRepairTypeAmountsByBodywork();
     }
@@ -112,7 +96,7 @@ public class RepairService {
 
         Date date = repair.getCheckinDate(); // Tu objeto Date
         LocalDateTime dateTime = date.toInstant()
-                .atZone(ZoneId.systemDefault()) // Cambia `systemDefault()` si necesitas una zona horaria específica
+                .atZone(ZoneId.systemDefault())
                 .toLocalDateTime();
         boolean isWithinRange = false;
 
@@ -255,7 +239,6 @@ public class RepairService {
     public List<RepairEntity> getRepairsByRepairCode(String repair_code) {
         return repairRepository.findByRepairCode(repair_code);
     }
-
 
 
     public float sumTotalAmountByRepairCode(String repair_code) {

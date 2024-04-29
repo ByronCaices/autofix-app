@@ -17,14 +17,6 @@ public class PriceService {
         return priceRepository.findAll();
     }
 
-    public List<PriceEntity> getPricesByRepairType(Integer repairType){
-        return priceRepository.findByRepairType(repairType);
-    }
-
-    public List<PriceEntity> getPricesByEngine(String engine){
-        return priceRepository.findByEngine(engine);
-    }
-
     public Integer getPriceByRepairTypeAndEngine(String engine,Integer repair_type){
         return priceRepository.findPriceEntityByEngineAndRepairType(engine, repair_type);
     }

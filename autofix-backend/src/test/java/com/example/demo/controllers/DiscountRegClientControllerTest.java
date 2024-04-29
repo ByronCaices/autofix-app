@@ -35,10 +35,12 @@ public class DiscountRegClientControllerTest {
                 "gas",
                 0.05f);
 
-        DiscountRegClientEntity disc2 = new DiscountRegClientEntity(1L,
-                "B",
-                "gas",
-                0.1f);
+        DiscountRegClientEntity disc2 = new DiscountRegClientEntity();
+        disc2.setId(2L);
+        disc2.setCategory("B");
+        disc2.setEngine("gas");
+        disc2.setDiscount(0.1f);
+
 
         List<DiscountRegClientEntity> discList = new ArrayList<>(Arrays.asList(disc1, disc2));
 
