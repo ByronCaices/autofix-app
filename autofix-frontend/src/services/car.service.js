@@ -8,10 +8,6 @@ const getByPlate = plate => {
     return httpClient.get(`/api/v1/cars/${plate}`)
 }
 
-const getByBrand = brand => {
-    return httpClient.get(`/api/v1/cars/brand_${brand}`)
-}
-
 const create = data => {
     return httpClient.post('/api/v1/cars/', data)
 }
@@ -24,4 +20,4 @@ const remove = plate => {
     return httpClient.delete(`/api/v1/cars/${plate}`)
 }
 
-export default { getAll, getByPlate, getByBrand, create, remove, update}
+export default { getAll, getByPlate, create, remove, update}

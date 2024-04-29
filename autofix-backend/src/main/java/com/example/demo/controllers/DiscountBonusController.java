@@ -21,12 +21,6 @@ public class DiscountBonusController {
         return ResponseEntity.ok(discountBonus);
     }
 
-    @GetMapping("/brand_{brand}")
-    public ResponseEntity<Integer> getBonusByBrand(@PathVariable String brand) {
-        Integer bonus = discountBonusService.getBonusByBrand(brand);
-        return ResponseEntity.ok(bonus);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<DiscountBonusEntity> getDiscountBonusById(@PathVariable Long id) {
         DiscountBonusEntity discountBonus = discountBonusService.getDiscountBonusById(id);
@@ -49,12 +43,6 @@ public class DiscountBonusController {
     public ResponseEntity<DiscountBonusEntity> updateDiscountBonus(@RequestBody DiscountBonusEntity discountBonus) {
         DiscountBonusEntity discountBonusUpdated = discountBonusService.saveDiscountBonus(discountBonus);
         return ResponseEntity.ok(discountBonusUpdated);
-    }
-
-    @PutMapping("/decreaseStock/{brand}")
-    public ResponseEntity<Void> decreaseStockByBrand(@PathVariable String brand) {
-        discountBonusService.decreaseStockByBrand(brand);
-        return ResponseEntity.ok().build();
     }
 
 }

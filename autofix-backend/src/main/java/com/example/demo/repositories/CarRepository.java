@@ -13,9 +13,6 @@ import java.util.List;
 @Repository
 public interface CarRepository extends JpaRepository<CarEntity, String> {
     public CarEntity findByPlate(String plate);
-    public List<CarEntity> findByBrand(String brand);
-    public List<CarEntity> findByBodywork(String bodywork);
-    //public CarEntity updateCar(CarEntity car);
 
     @Query(value = "SELECT * FROM cars ORDER BY plate ASC", nativeQuery = true)
     public List<CarEntity> findAllOrderByPlate();

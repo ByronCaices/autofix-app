@@ -38,9 +38,4 @@ public class CarService {
 
     public CarEntity getCarByPlate(String plate){ return carRepository.findByPlate(plate); }
 
-    public ArrayList<CarEntity> findByBrand(String brand){ return (ArrayList<CarEntity>) carRepository.findByBrand(brand); }
-
-    public ArrayList<CarEntity> findByBodywork(String bodywork){ return (ArrayList<CarEntity>) carRepository.findByBodywork(bodywork); }
-
-    public CarEntity updateCar(CarEntity car) { return carRepository.save(car); }
 }
