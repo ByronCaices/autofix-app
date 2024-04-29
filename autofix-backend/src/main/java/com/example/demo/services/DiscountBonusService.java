@@ -17,8 +17,16 @@ public class DiscountBonusService {
         return discountBonusRepository.findAll();
     }
 
+    public DiscountBonusEntity saveDiscountBonus(DiscountBonusEntity discountBonus){
+        return discountBonusRepository.save(discountBonus);
+    }
+
     public DiscountBonusEntity getByBrand(String brand) {
         return discountBonusRepository.findByBrand(brand);
+    }
+
+    public DiscountBonusEntity getDiscountBonusById(Long id) {
+        return discountBonusRepository.findById(id).orElse(null);
     }
 
     public int getBonusByBrand(String brand) {
@@ -30,6 +38,10 @@ public class DiscountBonusService {
         DiscountBonusEntity discountBonus = this.getByBrand(brand);
         discountBonus.setStock(discountBonus.getStock() - 1);
         discountBonusRepository.save(discountBonus);
+    }
+
+    public void deleteDiscountBonusByBrand(Long id) {
+        discountBonusRepository.deleteById(id);
     }
 
 

@@ -22,28 +22,22 @@ public class RepairController {
         return ResponseEntity.ok(repairs);
     }
 
-    @GetMapping("/type_{repair_type}")
-    public ResponseEntity<List<RepairEntity>> getRepairsByRepairType(@PathVariable Integer repair_type) {
-        List<RepairEntity> repairs = repairService.getRepairsByRepairType(repair_type);
+    @GetMapping("/{id}")
+    public ResponseEntity<RepairEntity> getRepairById(@PathVariable Long id) {
+        RepairEntity repair = repairService.getById(id);
+        return ResponseEntity.ok(repair);
+    }
+
+    @GetMapping("/code_{repair_code}")
+    public ResponseEntity<List<RepairEntity>> getRepairsByRepairCode(@PathVariable String repair_code) {
+        List<RepairEntity> repairs = repairService.getRepairsByRepairCode(repair_code);
         return ResponseEntity.ok(repairs);
     }
 
-    @GetMapping("/plate_{plate}")
-    public ResponseEntity<List<RepairEntity>> getRepairsByPlate(@PathVariable String plate) {
-        List<RepairEntity> repairs = repairService.getRepairsByPlate(plate);
-        return ResponseEntity.ok(repairs);
-    }
-
-    @GetMapping("/bodywork_{bodywork}")
-    public ResponseEntity<List<RepairEntity>> getRepairsByBodywork(@PathVariable String bodywork) {
-        List<RepairEntity> repairs = repairService.getRepairsByBodywork(bodywork);
-        return ResponseEntity.ok(repairs);
-    }
-
-    @GetMapping("/count_{plate}")
-    public ResponseEntity<Integer> countRepairsByPlate(@PathVariable String plate) {
-        Integer count = repairService.countByPlate(plate);
-        return ResponseEntity.ok(count);
+    @GetMapping("/totalAmount_{repair_code}")
+    public ResponseEntity<Float> sumTotalAmountByRepairCode(@PathVariable String repair_code) {
+        float totalAmount = repairService.sumTotalAmountByRepairCode(repair_code);
+        return ResponseEntity.ok(totalAmount);
     }
 
     @GetMapping("/repairTypeAmounts")
@@ -58,6 +52,12 @@ public class RepairController {
         return ResponseEntity.ok(repairTypeAmounts);
     }
 
+    @GetMapping("/averageRepairTimeByBrand")
+    public ResponseEntity<List<Object[]>> getAverageRepairTimeByBrand() {
+        List<Object[]> averageRepairTimeByBrand = repairService.getAverageRepairTimeByBrand();
+        return ResponseEntity.ok(averageRepairTimeByBrand);
+    }
+
     @PostMapping("/")
     public ResponseEntity<RepairEntity> saveRepair(@RequestBody RepairEntity repair){
         RepairEntity repairUpdated = repairService.saveRepair(repair); //Agrega los datos faltantes al repair sobre precios y descuentos
@@ -69,7 +69,6 @@ public class RepairController {
         RepairEntity repairUpdated = repairService.updateRepair(repair);
         return ResponseEntity.ok(repairUpdated);
     }
-
 
     @PutMapping("/calcFinalPrice/{id}")
     public ResponseEntity<RepairEntity> updateRepair(@PathVariable Long id){
@@ -86,23 +85,4 @@ public class RepairController {
             return ResponseEntity.ok(false);
         }
     }
-
-    @GetMapping("/code_{repair_code}")
-    public ResponseEntity<List<RepairEntity>> getRepairsByRepairCode(@PathVariable String repair_code) {
-        List<RepairEntity> repairs = repairService.getRepairsByRepairCode(repair_code);
-        return ResponseEntity.ok(repairs);
-    }
-
-    @GetMapping("/totalAmount_{repair_code}")
-    public ResponseEntity<Float> sumTotalAmountByRepairCode(@PathVariable String repair_code) {
-        float totalAmount = repairService.sumTotalAmountByRepairCode(repair_code);
-        return ResponseEntity.ok(totalAmount);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<RepairEntity> getRepairById(@PathVariable Long id) {
-        RepairEntity repair = repairService.getById(id);
-        return ResponseEntity.ok(repair);
-    }
-
 }

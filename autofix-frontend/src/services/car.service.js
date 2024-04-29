@@ -9,7 +9,7 @@ const getByPlate = plate => {
 }
 
 const getByBrand = brand => {
-    return httpClient.get(`/api/v1/cars/brans_${brand}`)
+    return httpClient.get(`/api/v1/cars/brand_${brand}`)
 }
 
 const create = data => {

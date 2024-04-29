@@ -10,11 +10,10 @@ import java.util.List;
 
 @Repository
 public interface RepairRepository extends JpaRepository<RepairEntity,Long> {
-    public RepairEntity findById(long id);
+
     public List<RepairEntity> findByPlate(String plate);
     public List<RepairEntity> findByBodywork(String bodywork);
     public List<RepairEntity> findByRepairType(Integer repairType);
-    public Integer countByPlate(String plate);
 
     @Query(value = "SELECT * FROM repairs ORDER BY checkin_date DESC", nativeQuery = true)
     public List<RepairEntity> findAllOrderByCheckinDate();
@@ -33,7 +32,7 @@ public interface RepairRepository extends JpaRepository<RepairEntity,Long> {
             "       bodywork\n" +
             "FROM repairs\n" +
             "GROUP BY repair_type, bodywork\n" +
-            "ORDER BY repair_type, bodywork", nativeQuery = true)
+            "ORDER BY SUM(total_amount) DESC, repair_type, bodywork", nativeQuery = true)
     List<Object[]> getRepairTypeAmountsByBodywork();
 
     @Query(value = "SELECT repair_type,\n" +
@@ -50,6 +49,15 @@ public interface RepairRepository extends JpaRepository<RepairEntity,Long> {
 
     @Query(value = "SELECT sum(total_amount) FROM REPAIRS where repair_code = :repair_code", nativeQuery = true)
     public float sumTotalAmountByRepairCode(@Param("repair_code") String repair_code);
+
+    @Query(value = "SELECT brand, " +
+            "ROUND(AVG(CAST(EXTRACT(EPOCH FROM (finish_date - checkin_date)) AS NUMERIC) / 3600), 1) AS average_repair_time_hours " +
+            "FROM repairs " +
+            "GROUP BY brand " +
+            "ORDER BY average_repair_time_hours ASC",
+            nativeQuery = true)
+    public List<Object[]> getAverageRepairTimeByBrand();
+
 
 
 

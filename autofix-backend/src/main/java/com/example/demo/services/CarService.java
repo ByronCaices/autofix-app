@@ -12,7 +12,7 @@ public class CarService {
     @Autowired
     CarRepository carRepository;
 
-    public ArrayList<CarEntity> getCars(){ return (ArrayList<CarEntity>) carRepository.findAll(); }
+    public ArrayList<CarEntity> getCars(){ return (ArrayList<CarEntity>) carRepository.findAllOrderByPlate(); }
 
     public CarEntity saveCar(CarEntity car){ return carRepository.save(car); }
 

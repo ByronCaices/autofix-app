@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.entities.CarEntity;
 import com.example.demo.entities.RepairEntity;
 import com.example.demo.repositories.RepairRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class RepairService {
 
     @Autowired
     public RepairService(PriceService priceService, DiscountRegClientService discountRegClientService,
-                         DiscountBonusService discountBonusService, SurchargeCarAgeService surchargeCarAgeService,
-                         CarService carService, RepairRepository repairRepository) {
+            DiscountBonusService discountBonusService, SurchargeCarAgeService surchargeCarAgeService,
+            CarService carService, RepairRepository repairRepository) {
         this.priceService = priceService;
         this.discountRegClientService = discountRegClientService;
         this.discountBonusService = discountBonusService;
@@ -32,11 +33,11 @@ public class RepairService {
         this.repairRepository = repairRepository;
     }
 
-    public ArrayList<RepairEntity> getRepairs(){
+    public ArrayList<RepairEntity> getRepairs() {
         return (ArrayList<RepairEntity>) repairRepository.findAllOrderByCheckinDate();
     }
 
-    public RepairEntity updateRepair(RepairEntity repair){
+    public RepairEntity updateRepair(RepairEntity repair) {
         return repairRepository.save(repair);
     }
 
@@ -68,18 +69,27 @@ public class RepairService {
         return repairRepository.getRepairTypeAmountsByEngine();
     }
 
+    public List<Object[]> getAverageRepairTimeByBrand() {
+        return repairRepository.getAverageRepairTimeByBrand();
+    }
+
     public RepairEntity saveRepair(RepairEntity repair) {
 
-        // This method adds to the just created repair entity the missing data about prices and discounts
-        //     except for discount pickup delay, who needs to be added after the repair is finished (in the addSurchPickupDelay method)
-        //     with the total amount (IVA included)
+        // This method adds to the just created repair entity the missing data about
+        // prices and discounts
+        // except for discount pickup delay, who needs to be added after the repair is
+        // finished (in the addSurchPickupDelay method)
+        // with the total amount (IVA included)
         this.addCarData(repair);
-        // ###### ADD REPAIR PRICE : depends on category (number of checkins in last 12 months) and engine
-        float repairPrice = priceService.getPriceByRepairTypeAndEngine(repair.getEngine(), repair.getRepairType())*1000;
-        //float repairPrice = repairPriceInt;
+        // ###### ADD REPAIR PRICE : depends on category (number of checkins in last 12
+        // months) and engine
+        float repairPrice = priceService.getPriceByRepairTypeAndEngine(repair.getEngine(), repair.getRepairType())
+                * 1000;
+        // float repairPrice = repairPriceInt;
         repair.setRepairPrice(repairPrice);
 
-        // ###### ADD DISCOUNT REG CLIENT : depends on category (number of checkins in last 12 months) and engine
+        // ###### ADD DISCOUNT REG CLIENT : depends on category (number of checkins in
+        // last 12 months) and engine
         Integer carVisits = repairRepository.countByPlateLastYear(repair.getPlate());
         String categoryRC;
         Float disc_reg_client = 0.0f;
@@ -95,9 +105,10 @@ public class RepairService {
             }
             disc_reg_client = discountRegClientService.getDiscountByCategoryAndEngine(categoryRC, repair.getEngine());
         }
-        repair.setDiscRegClient(repairPrice*disc_reg_client);
+        repair.setDiscRegClient(repairPrice * disc_reg_client);
 
-        // ###### Add MON-THU discount : 10% discount if checkin is between 9 AM and 12 PM from Monday to Thursday
+        // ###### Add MON-THU discount : 10% discount if checkin is between 9 AM and 12
+        // PM from Monday to Thursday
 
         Date date = repair.getCheckinDate(); // Tu objeto Date
         LocalDateTime dateTime = date.toInstant()
@@ -110,7 +121,8 @@ public class RepairService {
         int hour = dateTime.getHour();
 
         // Verificamos si es lunes a jueves
-        if (day == DayOfWeek.MONDAY || day == DayOfWeek.TUESDAY || day == DayOfWeek.WEDNESDAY || day == DayOfWeek.THURSDAY) {
+        if (day == DayOfWeek.MONDAY || day == DayOfWeek.TUESDAY || day == DayOfWeek.WEDNESDAY
+                || day == DayOfWeek.THURSDAY) {
             // Verificamos si la hora está entre las 9 AM y las 12 PM (exclusivo)
             if (hour >= 9 && hour < 12) {
                 isWithinRange = true;
@@ -118,18 +130,17 @@ public class RepairService {
         }
 
         if (isWithinRange) {
-            repair.setDiscMonThu(repairPrice*0.1f);
-        }
-        else{
-            repair.setDiscMonThu(repairPrice*0.0f);
+            repair.setDiscMonThu(repairPrice * 0.1f);
+        } else {
+            repair.setDiscMonThu(repairPrice * 0.0f);
         }
 
         // ###### ADD DISCOUNT BONUS : depends on car brand
         float disc_bonus = discountBonusService.getBonusByBrand(repair.getBrand());
-        if (disc_bonus != 0){
+        if (disc_bonus != 0) {
             discountBonusService.decreaseStockByBrand(repair.getBrand());
         }
-        repair.setDiscBonus(disc_bonus*1000); // not a percentage
+        repair.setDiscBonus(disc_bonus * 1000); // not a percentage
 
         // ###### ADD SURCHARGE CAR AGE : depends on car age and bodywork
 
@@ -138,44 +149,41 @@ public class RepairService {
         int carYear = carService.getCarByPlate(repair.getPlate()).getYear();
         int carAge = currentYear - carYear;
         String categoryCA;
-        if (carAge>=0 && carAge<=5){
+        if (carAge >= 0 && carAge <= 5) {
             categoryCA = "A";
-        }
-        else if (carAge>5 && carAge<=10){
+        } else if (carAge > 5 && carAge <= 10) {
             categoryCA = "B";
-        }
-        else if (carAge>10 && carAge<=15){
+        } else if (carAge > 10 && carAge <= 15) {
             categoryCA = "C";
-        }
-        else {
+        } else {
             categoryCA = "D";
         }
-        float surchargeCarAge = surchargeCarAgeService.getSurchargeByCategoryAndBodywork(categoryCA, repair.getBodywork());
-        repair.setSurchCarage(repairPrice*surchargeCarAge);
+        float surchargeCarAge = surchargeCarAgeService.getSurchargeByCategoryAndBodywork(categoryCA,
+                repair.getBodywork());
+        repair.setSurchCarage(repairPrice * surchargeCarAge);
 
         // ###### ADD SURCHARGE CAR MILEAGE : depends on car mileage and bodywork
         String categoryMA;
-        Long carMileage = repair.getMileage(); // Mileage value comes from frontend and next its updated in the car entity
+        Long carMileage = repair.getMileage(); // Mileage value comes from frontend and next its updated in the car
+                                               // entity
         carService.updateMileage(repair.getPlate(), repair.getMileage()); // Update car mileage on car table
-        if (carMileage>=0 && carMileage<=5000){
+        if (carMileage >= 0 && carMileage <= 5000) {
             categoryMA = "A";
-        }
-        else if (carMileage>5000 && carMileage<=12000){
+        } else if (carMileage > 5000 && carMileage <= 12000) {
             categoryMA = "B";
-        }
-        else if (carMileage>12000 && carMileage<=25000){
+        } else if (carMileage > 12000 && carMileage <= 25000) {
             categoryMA = "C";
-        }
-        else if (carMileage>25000 && carMileage<=40000){
+        } else if (carMileage > 25000 && carMileage <= 40000) {
             categoryMA = "D";
-        }
-        else {
+        } else {
             categoryMA = "E";
         }
-        float surchargeCarMileage = surchargeCarAgeService.getSurchargeByCategoryAndBodywork(categoryMA, repair.getBodywork());
-        repair.setSurchMileage(repairPrice*surchargeCarMileage);
+        float surchargeCarMileage = surchargeCarAgeService.getSurchargeByCategoryAndBodywork(categoryMA,
+                repair.getBodywork());
+        repair.setSurchMileage(repairPrice * surchargeCarMileage);
 
-        // ###### Add surcharge pickup delay (this is added when the car owner picks up the car after the finish date)
+        // ###### Add surcharge pickup delay (this is added when the car owner picks up
+        // the car after the finish date)
         repair.setSurchDelay(0.0f);
         repair.setIva(0.0f);
 
@@ -184,7 +192,7 @@ public class RepairService {
                 - repair.getDiscMonThu() + repair.getSurchCarage()
                 + repair.getSurchMileage());
 
-        float iva = fpartialTotal*0.19f;
+        float iva = fpartialTotal * 0.19f;
         repair.setIva(iva);
 
         fpartialTotal += iva;
@@ -194,10 +202,12 @@ public class RepairService {
         return repairRepository.save(repair);
     }
 
-    public void addCarData(RepairEntity repair){
-        repair.setBrand(carService.getCarByPlate(repair.getPlate()).getBrand());
-        repair.setBodywork(carService.getCarByPlate(repair.getPlate()).getBodywork());
-        repair.setEngine(carService.getCarByPlate(repair.getPlate()).getEngine());
+    public void addCarData(RepairEntity repair) {
+        CarEntity car = carService.getCarByPlate(repair.getPlate());
+        repair.setBrand(car.getBrand());
+        repair.setBodywork(car.getBodywork());
+        repair.setEngine(car.getEngine());
+        repair.setRepairCode(repair.getPlate() + repair.getMileage());
     }
 
     public RepairEntity addSurchPickupDelay(Long ig) {
@@ -212,8 +222,10 @@ public class RepairService {
         float surchargeCarMileage = repair.getSurchMileage();
 
         // ###### ADD SURCHARGE PICKUP DELAY : depends on finish date and checkout date
-        LocalDateTime finishDateTime = repair.getFinishDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-        LocalDateTime checkoutDateTime = repair.getCheckoutDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        LocalDateTime finishDateTime = repair.getFinishDate().toInstant().atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+        LocalDateTime checkoutDateTime = repair.getCheckoutDate().toInstant().atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
 
         // For each day of delay add 5% to the total amount
         long days = ChronoUnit.DAYS.between(finishDateTime, checkoutDateTime);
@@ -224,13 +236,13 @@ public class RepairService {
                 + surchargeCarAge + surchargeCarMileage + surchargeDelay);
 
         // Add IVA
-        float iva = partialTotal*0.19f;
+        float iva = partialTotal * 0.19f;
         repair.setIva(iva);
 
         // Add total amount (IVA included)
         partialTotal += iva;
 
-        //int finalTotal = (int) partialTotal;
+        // int finalTotal = (int) partialTotal;
         repair.setTotalAmount(partialTotal);
 
         return repairRepository.save(repair);
@@ -244,9 +256,10 @@ public class RepairService {
         return repairRepository.findByRepairCode(repair_code);
     }
 
+
+
     public float sumTotalAmountByRepairCode(String repair_code) {
         return repairRepository.sumTotalAmountByRepairCode(repair_code);
     }
-
 
 }

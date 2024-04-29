@@ -11,8 +11,8 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CallMadeRoundedIcon from "@mui/icons-material/CallMadeRounded";
-import NoCrashRoundedIcon from '@mui/icons-material/NoCrashRounded';
-import ConstructionRoundedIcon from '@mui/icons-material/ConstructionRounded';
+import NoCrashRoundedIcon from "@mui/icons-material/NoCrashRounded";
+import ConstructionRoundedIcon from "@mui/icons-material/ConstructionRounded";
 
 const RepairList = () => {
   const [repairs, setRepairs] = useState([]);
@@ -67,7 +67,7 @@ const RepairList = () => {
   return (
     <TableContainer component={Paper}>
       <br />
-        <h2>Repairs Register</h2>
+      <h2>Repairs Register</h2>
       <br /> <br />
       <Link
         to="/repair/add"
