@@ -9,14 +9,14 @@ pipeline{
             steps{
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/ByronCaices/autofix-app']])
                 dir("autofix-backend"){
-                    bash "mvn clean install"
+                    sh "mvn clean install"
                 }
             }
         }
         stage("Test"){
             steps{
                 dir("autofix-backend"){
-                    bash "mvn test"
+                    sh "mvn test"
                 }
             }
         }        
@@ -25,8 +25,8 @@ pipeline{
                 dir("autofix-backend"){
                     script{
                          withDockerRegistry(credentialsId: 'docker-credentials'){
-                            bash "docker build -t bcaices/spring-image ."
-                            bash "docker push bcaices/spring-image"
+                            sh "docker build -t bcaices/spring-image ."
+                            sh "docker push bcaices/spring-image"
                         }
                     }                    
                 }
