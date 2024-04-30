@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-//import { formatISODateIntl } from "../function";
 import repairService from "../services/repair.service";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -34,14 +33,11 @@ const AddRepair = () => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [titleRepairForm, setTitleRepairForm] = useState("");
 
-
-
   const navigate = useNavigate();
 
   const saveRepair = (e) => {
     e.preventDefault();
     console.log("SAVE");
-   
 
     const repair = {
       repairPrice,
@@ -65,7 +61,7 @@ const AddRepair = () => {
       totalAmount,
     };
 
-    console.log("RRRRRRR")
+    console.log("RRRRRRR");
     console.log(repair);
 
     repairService
@@ -76,20 +72,23 @@ const AddRepair = () => {
       })
       .catch((error) => {
         console.log(repair);
-        console.log(":(\nAn error ocurred while trying tu add new repair.", error);
-        window.alert("An error ocurred while trying tu add new repair. Check if your vehicle is registered in the system.");
+        console.log(
+          ":(\nAn error ocurred while trying tu add new repair.",
+          error
+        );
+        window.alert(
+          "An error ocurred while trying tu add new repair. Check if your vehicle is registered in the system."
+        );
       });
   };
-
 
   useEffect(() => {
     // repair code is the concatenation of plate and mileage
     //setRepairCode(plate + mileage);
     // save checkin datetime
-    setCheckinDate(dayjs());  
+    setCheckinDate(dayjs());
     console.log("useEffect");
     setTitleRepairForm("Register New Repair");
-    
   }, []);
 
   return (

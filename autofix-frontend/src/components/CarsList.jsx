@@ -9,10 +9,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import MinorCrashRoundedIcon from '@mui/icons-material/MinorCrashRounded';
+import MinorCrashRoundedIcon from "@mui/icons-material/MinorCrashRounded";
 
 const CarList = () => {
   const [cars, setCars] = useState([]);
@@ -27,10 +26,7 @@ const CarList = () => {
         setCars(response.data);
       })
       .catch((error) => {
-        console.log(
-          "An error ocurred while listing cars.",
-          error
-        );
+        console.log("An error ocurred while listing cars.", error);
       });
   };
 
@@ -40,9 +36,7 @@ const CarList = () => {
 
   const handleDelete = (plate) => {
     console.log("Printing plate...", plate);
-    const confirmDelete = window.confirm(
-      "Are you sure to delete this car?"
-    );
+    const confirmDelete = window.confirm("Are you sure to delete this car?");
     if (confirmDelete) {
       carService
         .remove(plate)
@@ -67,7 +61,7 @@ const CarList = () => {
   return (
     <TableContainer component={Paper}>
       <br />
-        <h2>Cars Register</h2>
+      <h2>Cars Register</h2>
       <br /> <br />
       <Link
         to="/car/add"

@@ -1,0 +1,5 @@
+docker run -p 5435:5432 --name postgres-container -e POSTGRES_PASSWORD=1234 --network ge-network -v bd-volume:/var/lib/postgresql/data -d postgres
+
+
+ docker run -p 8090:8090 --name spring-container -e DB_HOST=postgres-container -e DB_PORT=5432 -e DB_USER=postgres -e DB_PASS=1234 --network ge-network -d bcaices/spring-image
+

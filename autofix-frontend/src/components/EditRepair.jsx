@@ -37,7 +37,7 @@ const EditRepair = () => {
 
   const saveRepair = (e) => {
     e.preventDefault();
-    
+
     const repair = {
       id,
       repairPrice,

@@ -7,7 +7,7 @@ import axios from "axios";
 //console.log(autofixBackendPort)
 
 export default axios.create({
-    baseURL: `http://localhost:8090`,
+    baseURL: `http://localhost:80`,
     headers: {
         'Content-Type': 'application/json'
     }

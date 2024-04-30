@@ -176,7 +176,6 @@ const RepairDetails = () => {
       </Table>
       <h2>Total: ${totalAmount}</h2>
       <Link to="/repair/list">Back to List</Link>
-      
     </TableContainer>
   );
 };

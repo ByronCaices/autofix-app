@@ -23,7 +23,7 @@ function App() {
         <Navbar></Navbar>
         <Routes>
           <Route path="/home" element={<Home />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<Home />} />
           <Route path="/car/list" element={<CarList />} />
           <Route path="/car/edit/:plate" element={<EditCar />} />
           <Route path="/car/add" element={<AddCar />} />

@@ -8,10 +8,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 
 const RepTypeEngine = () => {
   const [reports, setReports] = useState([]);
@@ -26,10 +22,7 @@ const RepTypeEngine = () => {
         setReports(response.data);
       })
       .catch((error) => {
-        console.log(
-          "An error ocurred while listing reports.",
-          error
-        );
+        console.log("An error ocurred while listing reports.", error);
       });
   };
 
@@ -37,12 +30,10 @@ const RepTypeEngine = () => {
     init();
   }, []);
 
-
   return (
-    
     <TableContainer component={Paper}>
       <br />
-        <h2>Repair Type By Engine</h2>
+      <h2>Repair Type By Engine</h2>
       <br /> <br />
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
@@ -53,15 +44,13 @@ const RepTypeEngine = () => {
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Engine
             </TableCell>
-            
+
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
               N° of Repairs
             </TableCell>
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Total Sales
             </TableCell>
-            
-            
           </TableRow>
         </TableHead>
         <TableBody>
@@ -72,11 +61,9 @@ const RepTypeEngine = () => {
             >
               <TableCell align="left">{report[0]}</TableCell>
               <TableCell align="left">{report[3]}</TableCell>
-              
+
               <TableCell align="left">{report[2]}</TableCell>
               <TableCell align="left">${report[1]}</TableCell>
-              
-              
             </TableRow>
           ))}
         </TableBody>

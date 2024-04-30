@@ -10,11 +10,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
-import CallMadeRoundedIcon from "@mui/icons-material/CallMadeRounded";
-import NoCrashRoundedIcon from '@mui/icons-material/NoCrashRounded';
-import ConstructionRoundedIcon from '@mui/icons-material/ConstructionRounded';
-import ContactMailRoundedIcon from '@mui/icons-material/ContactMailRounded';
-import MoneyRoundedIcon from '@mui/icons-material/MoneyRounded';
+import ContactMailRoundedIcon from "@mui/icons-material/ContactMailRounded";
+import MoneyRoundedIcon from "@mui/icons-material/MoneyRounded";
 
 const BonusList = () => {
   const [bonuses, setBonuses] = useState([]);
@@ -64,7 +61,7 @@ const BonusList = () => {
   return (
     <TableContainer component={Paper}>
       <br />
-        <h2>Bonus Discount</h2>
+      <h2>Bonus Discount</h2>
       <br /> <br />
       <Link
         to="/bonus/add"
@@ -108,7 +105,6 @@ const BonusList = () => {
 
               <TableCell align="center">{bonus.stock}</TableCell>
               <TableCell align="left">
-
                 <Button
                   variant="contained"
                   color="info"
