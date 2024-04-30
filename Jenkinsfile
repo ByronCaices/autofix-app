@@ -25,6 +25,7 @@ pipeline{
                 dir("autofix-backend"){
                     script{
                          withDockerRegistry(credentialsId: 'docker-credentials'){
+                            sh "docker context use default"
                             sh "docker build -t bcaices/spring-image ."
                             sh "docker push bcaices/spring-image"
                         }
