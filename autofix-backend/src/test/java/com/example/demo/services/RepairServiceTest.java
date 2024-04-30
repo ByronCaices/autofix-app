@@ -500,6 +500,154 @@ public class RepairServiceTest {
         assertThat(savedRepair.getIva()).isEqualTo(18696);
     }
 
+    @Test
+    public void AddSurchPickupDelay_ShouldReturnUpdatedRepair() throws Exception {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date date1 = formatter.parse("2021-01-01");
+        Date date2 = formatter.parse("2021-01-02");
+        Date date3 = formatter.parse("2021-01-03");
+        //Given
+        RepairEntity repair = new RepairEntity(1L,"HHHH88ZZ",
+                "HHHH88",
+                "gas",
+                "suv",
+                "toyota",
+                1,
+                10000L,
+                date1,
+                date2,
+                date3,
+                1000,
+                1000,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0);
+
+        //When
+        when(repairsRepository.findById(1L)).thenReturn(java.util.Optional.of(repair));
+        when(repairsRepository.save(repair)).thenReturn(repair);
+        RepairEntity updatedRepair = repairService.addSurchPickupDelay(1L);
+
+        //Then
+        assertNotNull(updatedRepair);
+        assertThat(updatedRepair.getId()).isEqualTo(1L);
+        assertThat(updatedRepair.getPlate()).isEqualTo("HHHH88");
+        assertThat(updatedRepair.getBrand()).isEqualTo("toyota");
+    }
+
+    @Test
+    public void getRepairsByRepairCode_ShouldReturnRepairs() {
+        //Given
+        RepairEntity repair1 = new RepairEntity(1L,"HHHH88ZZ",
+                "HHHH88",
+                "gas",
+                "suv",
+                "toyota",
+                1,
+                10000L,
+                new Date(),
+                new Date(),
+                new Date(),
+                1000,
+                1000,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0);
+        RepairEntity repair2 = new RepairEntity(2L,"HHHH88ZZ",
+                "HHHH88",
+                "gas",
+                "suv",
+                "toyota",
+                1,
+                10000L,
+                new Date(),
+                new Date(),
+                new Date(),
+                1000,
+                1000,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0);
+        List<RepairEntity> repairs = new ArrayList<>();
+        repairs.add(repair1);
+        repairs.add(repair2);
+
+        //When
+        when(repairsRepository.findByRepairCode("HHHH88ZZ")).thenReturn(repairs);
+        List<RepairEntity> repairsList = repairService.getRepairsByRepairCode("HHHH88ZZ");
+
+        //Then
+        assertNotNull(repairsList);
+        assertThat(repairsList.size()).isEqualTo(2);
+    }
+
+    @Test
+    public void SumTotalAmountByRepairCode_ShouldReturnTotalAmount() {
+        //Given
+        RepairEntity repair1 = new RepairEntity(1L,"HHHH88ZZ",
+                "HHHH88",
+                "gas",
+                "suv",
+                "toyota",
+                1,
+                10000L,
+                new Date(),
+                new Date(),
+                new Date(),
+                1000,
+                1000,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0);
+        RepairEntity repair2 = new RepairEntity(2L,"HHHH88ZZ",
+                "HHHH88",
+                "gas",
+                "suv",
+                "toyota",
+                1,
+                10000L,
+                new Date(),
+                new Date(),
+                new Date(),
+                1000,
+                1000,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0);
+        List<RepairEntity> repairs = new ArrayList<>();
+        repairs.add(repair1);
+        repairs.add(repair2);
+
+        //When
+        when(repairsRepository.sumTotalAmountByRepairCode("HHHH88ZZ")).thenReturn(2000f);
+        float totalAmount = repairService.sumTotalAmountByRepairCode("HHHH88ZZ");
+
+        //Then
+        assertThat(totalAmount).isEqualTo(2000f);
+    }
+
+
 
 
 }
