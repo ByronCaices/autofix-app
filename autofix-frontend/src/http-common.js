@@ -7,7 +7,7 @@ import axios from "axios";
 //console.log(autofixBackendPort)
 
 export default axios.create({
-    baseURL: `http://localhost:80`,
+    baseURL: `http://autofix-app-bcaices.brazilsouth.cloudapp.azure.com`,
     headers: {
         'Content-Type': 'application/json'
     }
