@@ -56,7 +56,7 @@ ALTER TABLE public.discount_bonus OWNER TO postgres;
 -- Name: discount_bonus_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.discount_bonus_id_seq
+CREATE SEQUENCE IF NOT EXISTS public.discount_bonus_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -91,7 +91,7 @@ ALTER TABLE public.discount_reg_client OWNER TO postgres;
 -- Name: discount_reg_client_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.discount_reg_client_id_seq
+CREATE SEQUENCE IF NOT EXISTS public.discount_reg_client_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -126,7 +126,7 @@ ALTER TABLE public.prices OWNER TO postgres;
 -- Name: prices_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.prices_id_seq
+CREATE SEQUENCE IF NOT EXISTS public.prices_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -177,7 +177,7 @@ ALTER TABLE public.repairs OWNER TO postgres;
 -- Name: repairs_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.repairs_id_seq
+CREATE SEQUENCE IF NOT EXISTS public.repairs_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -212,7 +212,7 @@ ALTER TABLE public.surcharge_carage OWNER TO postgres;
 -- Name: surcharge_carage_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.surcharge_carage_id_seq
+CREATE SEQUENCE IF NOT EXISTS public.surcharge_carage_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -247,7 +247,7 @@ ALTER TABLE public.surcharge_mileage OWNER TO postgres;
 -- Name: surcharge_mileage_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.surcharge_mileage_id_seq
+CREATE SEQUENCE IF NOT EXISTS public.surcharge_mileage_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE

@@ -63,6 +63,7 @@ const AddRepair = () => {
 
     console.log("RRRRRRR");
     console.log(repair);
+    console.log("RRRRRRR");
 
     repairService
       .create(repair)
@@ -86,7 +87,7 @@ const AddRepair = () => {
     // repair code is the concatenation of plate and mileage
     //setRepairCode(plate + mileage);
     // save checkin datetime
-    setCheckinDate(dayjs());
+    //setCheckinDate(dayjs());
     console.log("useEffect");
     setTitleRepairForm("Register New Repair");
   }, []);

@@ -12,6 +12,9 @@ public interface DiscountBonusRepository extends JpaRepository<DiscountBonusEnti
 
     public DiscountBonusEntity findByBrand(String brand);
 
+    @Query(value = "SELECT stock FROM discount_bonus WHERE brand = :brand", nativeQuery = true)
+    public int findStockByBrand(String brand);
+
     @Query(value = "UPDATE discount_bonus\n" +
             "SET stock = stock - 1\n" +
             "WHERE brand = :brand", nativeQuery = true)

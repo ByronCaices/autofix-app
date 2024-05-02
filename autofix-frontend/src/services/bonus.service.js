@@ -9,7 +9,7 @@ const getById = id => {
 }
 
 const remove = id => {
-    return httpClient.delete(`/api/v1/discbonus/${id}`)
+    return httpClient.deleted(`/api/v1/discbonus/${id}`)
 }
 
 const update = data => {

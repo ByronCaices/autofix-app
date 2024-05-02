@@ -11,6 +11,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+// importar localdatetime
+import java.time.LocalDateTime;
+
 
 @Service
 public class RepairService {
@@ -18,17 +21,20 @@ public class RepairService {
     private final DiscountRegClientService discountRegClientService;
     private final DiscountBonusService discountBonusService;
     private final SurchargeCarAgeService surchargeCarAgeService;
+    private final SurchargeMileageService surchargeCarMileageService;
     private final CarService carService;
     private final RepairRepository repairRepository;
 
     @Autowired
     public RepairService(PriceService priceService, DiscountRegClientService discountRegClientService,
             DiscountBonusService discountBonusService, SurchargeCarAgeService surchargeCarAgeService,
+                         SurchargeMileageService surchargeCarMileageService,
             CarService carService, RepairRepository repairRepository) {
         this.priceService = priceService;
         this.discountRegClientService = discountRegClientService;
         this.discountBonusService = discountBonusService;
         this.surchargeCarAgeService = surchargeCarAgeService;
+        this.surchargeCarMileageService = surchargeCarMileageService;
         this.carService = carService;
         this.repairRepository = repairRepository;
     }
@@ -94,8 +100,8 @@ public class RepairService {
         // ###### Add MON-THU discount : 10% discount if checkin is between 9 AM and 12
         // PM from Monday to Thursday
 
-        Date date = repair.getCheckinDate(); // Tu objeto Date
-        LocalDateTime dateTime = date.toInstant()
+        //Date date = repair.getCheckinDate(); // Tu objeto Date
+        LocalDateTime dateTime = repair.getCheckinDate()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDateTime();
         boolean isWithinRange = false;
@@ -120,12 +126,17 @@ public class RepairService {
         }
 
         // ###### ADD DISCOUNT BONUS : depends on car brand
-        float disc_bonus = discountBonusService.getBonusByBrand(repair.getBrand());
-        if (disc_bonus != 0) {
-            discountBonusService.decreaseStockByBrand(repair.getBrand());
+        System.out.println("BBBBBBBBBBB brand: " + repair.getBrand());
+        if (discountBonusService.getStockByBrand(repair.getBrand()) <= 0) {
+            System.out.println("No hay stock de descuento por marca");
+            repair.setDiscBonus(0.0f);
+        } else {
+            float disc_bonus = discountBonusService.getBonusByBrand(repair.getBrand());
+            if (disc_bonus != 0) {
+                discountBonusService.decreaseStockByBrand(repair.getBrand());
+            }
+            repair.setDiscBonus(disc_bonus); // not a percentage
         }
-        repair.setDiscBonus(disc_bonus * 1000); // not a percentage
-
         // ###### ADD SURCHARGE CAR AGE : depends on car age and bodywork
 
         LocalDate currentDate = LocalDate.now();
@@ -162,7 +173,8 @@ public class RepairService {
         } else {
             categoryMA = "E";
         }
-        float surchargeCarMileage = surchargeCarAgeService.getSurchargeByCategoryAndBodywork(categoryMA,
+        System.out.println("CCCCCCCCCC categoryMA: " + categoryMA);
+        float surchargeCarMileage = surchargeCarMileageService.getSurchargeMileageByCategoryAndBodywork(categoryMA,
                 repair.getBodywork());
         repair.setSurchMileage(repairPrice * surchargeCarMileage);
 
@@ -188,6 +200,8 @@ public class RepairService {
 
     public void addCarData(RepairEntity repair) {
         CarEntity car = carService.getCarByPlate(repair.getPlate());
+        //usar localdatetime
+        repair.setCheckinDate(LocalDateTime.now());
         repair.setBrand(car.getBrand());
         repair.setBodywork(car.getBodywork());
         repair.setEngine(car.getEngine());
@@ -206,9 +220,9 @@ public class RepairService {
         float surchargeCarMileage = repair.getSurchMileage();
 
         // ###### ADD SURCHARGE PICKUP DELAY : depends on finish date and checkout date
-        LocalDateTime finishDateTime = repair.getFinishDate().toInstant().atZone(ZoneId.systemDefault())
+        LocalDateTime finishDateTime = repair.getFinishDate().atZone(ZoneId.systemDefault())
                 .toLocalDateTime();
-        LocalDateTime checkoutDateTime = repair.getCheckoutDate().toInstant().atZone(ZoneId.systemDefault())
+        LocalDateTime checkoutDateTime = repair.getCheckoutDate().atZone(ZoneId.systemDefault())
                 .toLocalDateTime();
 
         // For each day of delay add 5% to the total amount

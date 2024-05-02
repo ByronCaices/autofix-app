@@ -34,6 +34,10 @@ public class DiscountBonusService {
         return Optional.ofNullable(bonus).orElse(0);
     }
 
+    public int getStockByBrand(String brand) {
+        return discountBonusRepository.findStockByBrand(brand);
+    }
+
     public void decreaseStockByBrand(String brand) {
         DiscountBonusEntity discountBonus = this.getByBrand(brand);
         discountBonus.setStock(discountBonus.getStock() - 1);

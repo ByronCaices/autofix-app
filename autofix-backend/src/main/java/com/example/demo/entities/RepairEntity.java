@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -27,9 +28,9 @@ public class RepairEntity {
     private String brand;
     private Integer repairType;
     private Long mileage;
-    private Date checkinDate;
-    private Date finishDate;
-    private Date checkoutDate;
+    private LocalDateTime checkinDate;
+    private LocalDateTime finishDate;
+    private LocalDateTime checkoutDate;
     //private Long surcharges;
     private float repairPrice;
     private float totalAmount;

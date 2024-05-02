@@ -27,6 +27,12 @@ public class DiscountBonusController {
         return ResponseEntity.ok(discountBonus);
     }
 
+    @GetMapping("/stock/{brand}")
+    public ResponseEntity<Integer> getStockByBrand(@PathVariable String brand) {
+        Integer stock = discountBonusService.getStockByBrand(brand);
+        return ResponseEntity.ok(stock);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDiscountBonusByBrand(@PathVariable Long id) {
         discountBonusService.deleteDiscountBonusByBrand(id);
