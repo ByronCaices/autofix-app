@@ -4,8 +4,10 @@
 /home/bcaices/Desktop/autofix-app/autofix-backend/src/test/java/com/example/demo/services/PriceServiceTest.java
 /home/bcaices/Desktop/autofix-app/autofix-backend/src/test/java/com/example/demo/controllers/SurchargeMileageControllerTest.java
 /home/bcaices/Desktop/autofix-app/autofix-backend/src/test/java/com/example/demo/controllers/SurchargeCarAgeControllerTest.java
+/home/bcaices/Desktop/autofix-app/autofix-backend/src/test/java/com/example/demo/controllers/OrderControllerTest.java
 /home/bcaices/Desktop/autofix-app/autofix-backend/src/test/java/com/example/demo/services/RepairServiceTest.java
 /home/bcaices/Desktop/autofix-app/autofix-backend/src/test/java/com/example/demo/controllers/CarControllerTest.java
+/home/bcaices/Desktop/autofix-app/autofix-backend/src/test/java/com/example/demo/services/OrderServiceTest.java
 /home/bcaices/Desktop/autofix-app/autofix-backend/src/test/java/com/example/demo/services/CarServiceTest.java
 /home/bcaices/Desktop/autofix-app/autofix-backend/src/test/java/com/example/demo/services/SurchargeMileageServiceTest.java
 /home/bcaices/Desktop/autofix-app/autofix-backend/src/test/java/com/example/demo/services/DiscountBonusServiceTest.java

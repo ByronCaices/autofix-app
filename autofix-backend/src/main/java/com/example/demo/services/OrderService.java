@@ -17,7 +17,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     @Autowired
-    public OrderService(RepairService repairService, DiscountBonusService discountBonusService, RepairRepository repairRepository, OrderRepository orderRepository) {
+    public OrderService(RepairService repairService, DiscountBonusService discountBonusService, OrderRepository orderRepository) {
         this.repairService = repairService;
         this.discountBonusService = discountBonusService;
         this.orderRepository = orderRepository;
