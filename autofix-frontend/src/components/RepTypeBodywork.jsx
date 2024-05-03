@@ -46,7 +46,7 @@ const RepTypeBodywork = () => {
             </TableCell>
 
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
-              N° of Repairs
+              Numbers of Repairs
             </TableCell>
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Total Sales
