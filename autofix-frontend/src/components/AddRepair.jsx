@@ -159,7 +159,7 @@ const AddRepair = () => {
             style={{ marginLeft: "0.5rem" }}
             startIcon={<SaveIcon />}
           >
-            Save
+            Save Repair
           </Button>
         </FormControl>
       </form>
