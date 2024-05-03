@@ -24,7 +24,7 @@ const EditRepair = () => {
   const [discMonThu, setDiscMonThu] = useState("");
   const [discBonus, setDiscBonus] = useState("");
   const [surchCarage, setSurchCarage] = useState("");
-  const [surchCarmileage, setSurchCarmileage] = useState("");
+  const [surchMileage, setSurchMileage] = useState("");
   const [surchDelay, setSurchDelay] = useState("");
   const [checkinDate, setCheckinDate] = useState("");
   const [finishDate, setFinishDate] = useState("");
@@ -52,7 +52,7 @@ const EditRepair = () => {
       discMonThu,
       discBonus,
       surchCarage,
-      surchCarmileage,
+      surchMileage,
       surchDelay,
       checkinDate,
       finishDate: finishDate,
@@ -71,7 +71,7 @@ const EditRepair = () => {
         .catch((error) => {
           console.log("An error ocurred while trying to update repair.", error);
         });
-      repairService.addfinalprice(id);
+      //repairService.addfinalprice(id);
     } else {
       //Crear nuevo
       repairService
@@ -88,6 +88,7 @@ const EditRepair = () => {
           );
         });
     }
+    repairService.addfinalprice(id);
   };
 
   useEffect(() => {
@@ -96,7 +97,7 @@ const EditRepair = () => {
       console.log("Edit Repair getting repair...");
       repairService
         .getById(id)
-        .then((repair) => {
+        .then((repair) => { 
           setRepairPrice(repair.data.repairPrice);
           setRepairType(repair.data.repairType);
           setRepairCode(repair.data.repairCode);
@@ -109,13 +110,14 @@ const EditRepair = () => {
           setDiscMonThu(repair.data.discMonThu);
           setDiscBonus(repair.data.discBonus);
           setSurchCarage(repair.data.surchCarage);
-          setSurchCarmileage(repair.data.surchCarmileage);
+          setSurchMileage(repair.data.surchMileage);
           setSurchDelay(repair.data.surchDelay);
           setCheckinDate(repair.data.checkinDate);
           setFinishDate(repair.data.finishDate);
           setCheckoutDate(repair.data.checkoutDate);
           setIva(repair.data.iva);
           setTotalAmount(repair.data.totalAmount);
+          console.log("Edit Repair getting repair...", repair.data);
         })
         .catch((error) => {
           console.log("An error ocurred while trying to set repair.", error);

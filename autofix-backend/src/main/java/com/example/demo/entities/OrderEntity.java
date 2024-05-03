@@ -16,10 +16,11 @@ public class OrderEntity {
     @Id
     @Column(unique = true, nullable = false)
     private String repairCode;
+
     private String plate;
     private String engine;
-    private String brand;
     private String bodywork;
-    private Long mileage;
+    private float discBonus;
+    private float totalAmount;
 }
 

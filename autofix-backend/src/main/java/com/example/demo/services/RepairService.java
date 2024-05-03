@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.entities.CarEntity;
+import com.example.demo.entities.OrderEntity;
 import com.example.demo.entities.RepairEntity;
 import com.example.demo.repositories.RepairRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class RepairService {
     public RepairService(PriceService priceService, DiscountRegClientService discountRegClientService,
             DiscountBonusService discountBonusService, SurchargeCarAgeService surchargeCarAgeService,
                          SurchargeMileageService surchargeCarMileageService,
-            CarService carService, RepairRepository repairRepository) {
+            CarService carService,RepairRepository repairRepository) {
         this.priceService = priceService;
         this.discountRegClientService = discountRegClientService;
         this.discountBonusService = discountBonusService;
@@ -44,6 +45,7 @@ public class RepairService {
     }
 
     public RepairEntity updateRepair(RepairEntity repair) {
+        //repair = this.addSurchPickupDelay(id);
         return repairRepository.save(repair);
     }
 
@@ -67,14 +69,14 @@ public class RepairService {
 
         // This method adds to the just created repair entity the missing data about
         // prices and discounts
-        // except for discount pickup delay, who needs to be added after the repair is
+        // except for discount pickup delay, who needs to be added after the repair is done
+        // except for discount bonus, who needs to be added after the repair is done
         // finished (in the addSurchPickupDelay method)
         // with the total amount (IVA included)
         this.addCarData(repair);
         // ###### ADD REPAIR PRICE : depends on category (number of checkins in last 12
         // months) and engine
-        float repairPrice = priceService.getPriceByRepairTypeAndEngine(repair.getEngine(), repair.getRepairType())
-                * 1000;
+        float repairPrice = priceService.getPriceByRepairTypeAndEngine(repair.getEngine(), repair.getRepairType())* 1000;
         // float repairPrice = repairPriceInt;
         repair.setRepairPrice(repairPrice);
 
@@ -126,6 +128,7 @@ public class RepairService {
         }
 
         // ###### ADD DISCOUNT BONUS : depends on car brand
+        /*
         System.out.println("BBBBBBBBBBB brand: " + repair.getBrand());
         if (discountBonusService.getStockByBrand(repair.getBrand()) <= 0) {
             System.out.println("No hay stock de descuento por marca");
@@ -137,6 +140,8 @@ public class RepairService {
             }
             repair.setDiscBonus(disc_bonus); // not a percentage
         }
+
+         */
         // ###### ADD SURCHARGE CAR AGE : depends on car age and bodywork
 
         LocalDate currentDate = LocalDate.now();
@@ -184,7 +189,7 @@ public class RepairService {
         repair.setIva(0.0f);
 
         // ###### Add partial total amount (without surcharge pickup delay and IVA)
-        float fpartialTotal = (repairPrice - repair.getDiscRegClient() - repair.getDiscBonus()
+        float fpartialTotal = (repairPrice - repair.getDiscRegClient()
                 - repair.getDiscMonThu() + repair.getSurchCarage()
                 + repair.getSurchMileage());
 
@@ -208,13 +213,29 @@ public class RepairService {
         repair.setRepairCode(repair.getPlate() + repair.getMileage());
     }
 
-    public RepairEntity addSurchPickupDelay(Long ig) {
+    public RepairEntity addSurchPickupDelay(Long id) {
 
-        RepairEntity repair = this.getById(ig);
+        RepairEntity repair = this.getById(id);
+        float disc_bonus = 0.0f;
+        /*
+        System.out.println("BBBBBBBBBBB brand: " + repair.getBrand());
+        if (discountBonusService.getStockByBrand(repair.getBrand()) <= 0) {
+            System.out.println("No hay stock de descuento por marca");
+            //repair.setDiscBonus(0.0f);
+            //disc_bonus = 0.0f;
+        } else {
+            disc_bonus = discountBonusService.getBonusByBrand(repair.getBrand());
+            if (disc_bonus != 0) {
+                discountBonusService.decreaseStockByBrand(repair.getBrand());
+            }
+            //repair.setDiscBonus(disc_bonus); // not a percentage
+        }
+
+         */
 
         float repairPrice = repair.getRepairPrice();
         float disc_reg_client = repair.getDiscRegClient();
-        float disc_bonus = repair.getDiscBonus();
+        //float disc_bonus = repair.getDiscBonus();
         float disc_mon_thu = repair.getDiscMonThu();
         float surchargeCarAge = repair.getSurchCarage();
         float surchargeCarMileage = repair.getSurchMileage();
@@ -230,7 +251,10 @@ public class RepairService {
         float surchargeDelay = 0.05f * days * repairPrice;
         repair.setSurchDelay(surchargeDelay);
 
-        float partialTotal = (repairPrice - disc_reg_client - disc_bonus - disc_mon_thu
+        //float partialTotal = (repairPrice - disc_reg_client - disc_bonus - disc_mon_thu
+        //        + surchargeCarAge + surchargeCarMileage + surchargeDelay);
+
+        float partialTotal = (repairPrice - disc_reg_client - disc_mon_thu
                 + surchargeCarAge + surchargeCarMileage + surchargeDelay);
 
         // Add IVA
@@ -243,8 +267,38 @@ public class RepairService {
         // int finalTotal = (int) partialTotal;
         repair.setTotalAmount(partialTotal);
 
+        // close order
+        //orderService.saveOrder(new OrderEntity(repair.getRepairCode(), repair.getPlate(), repair.getEngine(),
+        //        repair.getBodywork(), disc_bonus, repair.getTotalAmount()));
+
         return repairRepository.save(repair);
     }
+
+    /*
+    public void closeRepairOrder(Long id){
+        RepairEntity repair = this.getById(id);
+        float disc_bonus = 0.0f;
+        System.out.println("BBBBBBBBBBB brand: " + repair.getBrand());
+        if (discountBonusService.getStockByBrand(repair.getBrand()) <= 0) {
+            System.out.println("No hay stock de descuento por marca");
+            //repair.setDiscBonus(0.0f);
+            //disc_bonus = 0.0f;
+        } else {
+            disc_bonus = discountBonusService.getBonusByBrand(repair.getBrand());
+            if (disc_bonus != 0) {
+                discountBonusService.decreaseStockByBrand(repair.getBrand());
+            }
+            //repair.setDiscBonus(disc_bonus); // not a percentage
+        }
+
+        // Obtener suma total by repaircode
+        float totalAmount = repairRepository.sumTotalAmountByRepairCode(repair.getRepairCode());
+
+        orderService.saveOrder(new OrderEntity(repair.getRepairCode(), repair.getPlate(), repair.getEngine(),
+                repair.getBodywork(), disc_bonus, totalAmount));
+    }
+    */
+
 
     public void deleteRepair(Long id) {
         repairRepository.deleteById(id);

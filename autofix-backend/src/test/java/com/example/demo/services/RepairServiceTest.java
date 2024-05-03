@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,6 +45,9 @@ public class RepairServiceTest {
     @MockBean
     CarService carService;
 
+    @MockBean
+    SurchargeMileageService surchargeMileageService;
+
     @Test
     void whenGetRepairs_thenCorrect() {
         //Given
@@ -68,9 +72,9 @@ public class RepairServiceTest {
     void whenUpdateRepair_thenCorrect() throws Exception {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date date1 = formatter.parse("2021-01-01");
-        Date date2 = formatter.parse("2021-01-02");
-        Date date3 = formatter.parse("2021-01-03");
+        LocalDateTime date1 = LocalDateTime.now();
+        LocalDateTime date2 = LocalDateTime.now();
+        LocalDateTime date3 = LocalDateTime.now();
         //Given
         RepairEntity repair = new RepairEntity(1L,"HHHH88ZZ",
                 "HHHH88",
@@ -107,9 +111,9 @@ public class RepairServiceTest {
     void whenGetById_thenCorrect() throws Exception {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date date1 = formatter.parse("2021-01-01");
-        Date date2 = formatter.parse("2021-01-02");
-        Date date3 = formatter.parse("2021-01-03");
+        LocalDateTime date1 = LocalDateTime.now();
+        LocalDateTime date2 = LocalDateTime.now();
+        LocalDateTime date3 = LocalDateTime.now();
         //Given
         RepairEntity repair = new RepairEntity(1L,"HHHH88ZZ",
                 "HHHH88",
@@ -200,7 +204,8 @@ public class RepairServiceTest {
     void whenSaveRepair_thenCorrect() throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date date1 = formatter.parse("2024-04-15");
+        LocalDateTime date1 = LocalDateTime.now();
+
         //Date date2 = formatter.parse("2021-01-02");
         //Date date3 = formatter.parse("2021-01-03");
         //Given
@@ -276,7 +281,7 @@ public class RepairServiceTest {
     void whenSaveRepair_BthenCorrect() throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date date1 = formatter.parse("2024-04-15");
+        LocalDateTime date1 = LocalDateTime.now();
         //Date date2 = formatter.parse("2021-01-02");
         //Date date3 = formatter.parse("2021-01-03");
         //Given
@@ -352,7 +357,7 @@ public class RepairServiceTest {
     void whenSaveRepair_CthenCorrect() throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date date1 = formatter.parse("2024-04-15");
+        LocalDateTime date1 = LocalDateTime.now();
         //Date date2 = formatter.parse("2021-01-02");
         //Date date3 = formatter.parse("2021-01-03");
         //Given
@@ -428,7 +433,7 @@ public class RepairServiceTest {
     void whenSaveRepair_DthenCorrect() throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date date1 = formatter.parse("2024-04-15");
+        LocalDateTime date1 = LocalDateTime.now();
         //Date date2 = formatter.parse("2021-01-02");
         //Date date3 = formatter.parse("2021-01-03");
         //Given
@@ -504,9 +509,9 @@ public class RepairServiceTest {
     public void AddSurchPickupDelay_ShouldReturnUpdatedRepair() throws Exception {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date date1 = formatter.parse("2021-01-01");
-        Date date2 = formatter.parse("2021-01-02");
-        Date date3 = formatter.parse("2021-01-03");
+        LocalDateTime date1 = LocalDateTime.now();
+        LocalDateTime date2 = LocalDateTime.now();
+        LocalDateTime date3 = LocalDateTime.now();
         //Given
         RepairEntity repair = new RepairEntity(1L,"HHHH88ZZ",
                 "HHHH88",
@@ -550,9 +555,9 @@ public class RepairServiceTest {
                 "toyota",
                 1,
                 10000L,
-                new Date(),
-                new Date(),
-                new Date(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
                 1000,
                 1000,
                 0,
@@ -569,9 +574,9 @@ public class RepairServiceTest {
                 "toyota",
                 1,
                 10000L,
-                new Date(),
-                new Date(),
-                new Date(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
                 1000,
                 1000,
                 0,
@@ -604,9 +609,9 @@ public class RepairServiceTest {
                 "toyota",
                 1,
                 10000L,
-                new Date(),
-                new Date(),
-                new Date(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
                 1000,
                 1000,
                 0,
@@ -623,9 +628,9 @@ public class RepairServiceTest {
                 "toyota",
                 1,
                 10000L,
-                new Date(),
-                new Date(),
-                new Date(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
                 1000,
                 1000,
                 0,

@@ -10,7 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -39,9 +39,13 @@ public class RepairControllerTest {
     public void listRepairs_ShouldReturnRepairs() throws Exception {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date date1 = formatter.parse("2021-01-01");
-        Date date2 = formatter.parse("2021-01-02");
-        Date date3 = formatter.parse("2021-01-03");
+        //Date date1 = formatter.parse("2021-01-01");
+        //Date date2 = formatter.parse("2021-01-02");
+        //Date date3 = formatter.parse("2021-01-03");
+
+        LocalDateTime date1 = LocalDateTime.now();
+        LocalDateTime date2 = LocalDateTime.now();
+        LocalDateTime date3 = LocalDateTime.now();
         RepairEntity repair1 = new RepairEntity(1L,"HHHH88",
         "HHHH88",
         "gas",
@@ -98,9 +102,9 @@ public class RepairControllerTest {
     public void getRepairById_ShouldReturnRepair() throws Exception {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date date1 = formatter.parse("2021-01-01");
-        Date date2 = formatter.parse("2021-01-02");
-        Date date3 = formatter.parse("2021-01-03");
+        LocalDateTime date1 = LocalDateTime.now();
+        LocalDateTime date2 = LocalDateTime.now();
+        LocalDateTime date3 = LocalDateTime.now();
         RepairEntity repair = new RepairEntity(1L,"HHHH88",
         "HHHH88",
         "gas",
@@ -133,9 +137,9 @@ public class RepairControllerTest {
     public void getRepairsByRepairCode_ShouldReturnRepairs() throws Exception {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date date1 = formatter.parse("2021-01-01");
-        Date date2 = formatter.parse("2021-01-02");
-        Date date3 = formatter.parse("2021-01-03");
+        LocalDateTime date1 = LocalDateTime.now();
+        LocalDateTime date2 = LocalDateTime.now();
+        LocalDateTime date3 = LocalDateTime.now();
         RepairEntity repair1 = new RepairEntity(1L,"HHHH88ZZ",
         "HHHH88",
         "gas",
@@ -192,9 +196,9 @@ public class RepairControllerTest {
     public void sumTotalAmountByRepairCode_ShouldReturnTotalAmount() throws Exception {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date date1 = formatter.parse("2021-01-01");
-        Date date2 = formatter.parse("2021-01-02");
-        Date date3 = formatter.parse("2021-01-03");
+        LocalDateTime date1 = LocalDateTime.now();
+        LocalDateTime date2 = LocalDateTime.now();
+        LocalDateTime date3 = LocalDateTime.now();
         RepairEntity repair1 = new RepairEntity(1L,"HHHH88ZZ",
         "HHHH88",
         "gas",
@@ -249,9 +253,9 @@ public class RepairControllerTest {
     public void getRepairTypeAmounts_ShouldReturnRepairTypeAmounts() throws Exception {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date date1 = formatter.parse("2021-01-01");
-        Date date2 = formatter.parse("2021-01-02");
-        Date date3 = formatter.parse("2021-01-03");
+        LocalDateTime date1 = LocalDateTime.now();
+        LocalDateTime date2 = LocalDateTime.now();
+        LocalDateTime date3 = LocalDateTime.now();
         RepairEntity repair1 = new RepairEntity(1L,"HHHH88ZZ",
         "HHHH88",
         "gas",
@@ -306,9 +310,9 @@ public class RepairControllerTest {
     public void getRepairTypeAmountsByEngine_ShouldReturnRepairTypeAmounts() throws Exception {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date date1 = formatter.parse("2021-01-01");
-        Date date2 = formatter.parse("2021-01-02");
-        Date date3 = formatter.parse("2021-01-03");
+        LocalDateTime date1 = LocalDateTime.now();
+        LocalDateTime date2 = LocalDateTime.now();
+        LocalDateTime date3 = LocalDateTime.now();
         RepairEntity repair1 = new RepairEntity(1L,"HHHH88ZZ",
         "HHHH88",
         "gas",
@@ -363,9 +367,9 @@ public class RepairControllerTest {
     public void getAverageRepairTimeByBrand_ShouldReturnAverageRepairTimeByBrand() throws Exception {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date date1 = formatter.parse("2021-01-01");
-        Date date2 = formatter.parse("2021-01-02");
-        Date date3 = formatter.parse("2021-01-03");
+        LocalDateTime date1 = LocalDateTime.now();
+        LocalDateTime date2 = LocalDateTime.now();
+        LocalDateTime date3 = LocalDateTime.now();
         RepairEntity repair1 = new RepairEntity(1L,"HHHH88ZZ",
         "HHHH88",
         "gas",
@@ -420,9 +424,9 @@ public class RepairControllerTest {
     public void saveRepair_ShouldReturnSavedRepair() throws Exception {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date date1 = formatter.parse("2021-01-01");
-        Date date2 = formatter.parse("2021-01-02");
-        Date date3 = formatter.parse("2021-01-03");
+        LocalDateTime date1 = LocalDateTime.now();
+        LocalDateTime date2 = LocalDateTime.now();
+        LocalDateTime date3 = LocalDateTime.now();
         RepairEntity repair = new RepairEntity(1L,"HHHH88ZZ",
         "HHHH88",
         "gas",
@@ -452,7 +456,7 @@ public class RepairControllerTest {
                     "repairType": 1,
                     "repairCode": "rrr",
                     "mileage": 23456,
-                    "checkinDate": "2024-04-19T14:00:00.000+00:00",
+                    "checkinDate": "2024-05-02T10:12:39",
                     "finishDate": "",
                     "checkoutDate": "",
                     "repairPrice": 0.0,
@@ -479,9 +483,9 @@ public class RepairControllerTest {
     public void updateRepair_ShouldReturnUpdatedRepair() throws Exception {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date date1 = formatter.parse("2021-01-01");
-        Date date2 = formatter.parse("2021-01-02");
-        Date date3 = formatter.parse("2021-01-03");
+        LocalDateTime date1 = LocalDateTime.now();
+        LocalDateTime date2 = LocalDateTime.now();
+        LocalDateTime date3 = LocalDateTime.now();
         RepairEntity repair = new RepairEntity(1L,"HHHH88ZZ",
         "HHHH88",
         "gas",
@@ -512,7 +516,7 @@ public class RepairControllerTest {
                     "repairType": 1,
                     "repairCode": "rrr",
                     "mileage": 23456,
-                    "checkinDate": "2024-04-19T14:00:00.000+00:00",
+                    "checkinDate": "2024-05-02T10:12:39",
                     "finishDate": "",
                     "checkoutDate": "",
                     "repairPrice": 0.0,
@@ -539,9 +543,9 @@ public class RepairControllerTest {
     public void updateRepair_ShouldReturnUpdatedRepairWithFinalPrice() throws Exception {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date date1 = formatter.parse("2021-01-01");
-        Date date2 = formatter.parse("2021-01-02");
-        Date date3 = formatter.parse("2021-01-03");
+        LocalDateTime date1 = LocalDateTime.now();
+        LocalDateTime date2 = LocalDateTime.now();
+        LocalDateTime date3 = LocalDateTime.now();
         RepairEntity repair = new RepairEntity(1L,"HHHH88ZZ",
         "HHHH88",
         "gas",
@@ -600,9 +604,9 @@ public class RepairControllerTest {
     public void deleteRepair_ShouldReturnDeletedRepair() throws Exception {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date date1 = formatter.parse("2021-01-01");
-        Date date2 = formatter.parse("2021-01-02");
-        Date date3 = formatter.parse("2021-01-03");
+        LocalDateTime date1 = LocalDateTime.now();
+        LocalDateTime date2 = LocalDateTime.now();
+        LocalDateTime date3 = LocalDateTime.now();
         RepairEntity repair = new RepairEntity(1L,"HHHH88ZZ",
         "HHHH88",
         "gas",

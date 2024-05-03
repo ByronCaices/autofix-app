@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { format } from "date-fns";
+import { format, set } from "date-fns";
 import repairService from "../services/repair.service";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -9,11 +9,18 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
+import GppBadRoundedIcon from '@mui/icons-material/GppBadRounded';
+import bonusService from "../services/bonus.service";
+import orderService from "../services/order.service";
 
 const RepairDetails = () => {
   const [repairs, setRepairs] = useState([]);
   const { repairCode } = useParams();
   const [totalAmount, setTotalAmount] = useState(0);
+  const [discountBonus, setDiscountBonus] = useState(0);
+  const [myid, setMyid] = useState(0);
 
   const navigate = useNavigate();
 
@@ -24,8 +31,26 @@ const RepairDetails = () => {
     });
   };
 
+  const handleDiscBonus = (repairCode) => {
+    orderService.getBonusByRepairCode(repairCode).then((response) => {
+      console.log("Disc Bonus...", response.data);
+      setDiscountBonus(response.data);
+    }).catch((error) => {
+      console.log("Aun no hay un dic bonus definido", error);
+    });
+  };
+
+  const handleCloseOrder = () => {
+    console.log("Closing order...", repairs[0].id);
+    //setMyid(); //FALTA
+    orderService.create(repairs[0].id);
+    //navigate(`/repair/list`);
+    window.location.reload();
+  };
+    
+
   const init = () => {
-    console.log("RepairCode", repairCode);
+    
     repairService
       .getByCode(repairCode)
       .then((response) => {
@@ -36,6 +61,9 @@ const RepairDetails = () => {
         console.log("An error ocurred while listing repair details.", error);
       });
     handleTotalAmount(repairCode);
+    handleDiscBonus(repairCode);
+    console.log(repairs);
+    
   };
 
   useEffect(() => {
@@ -96,9 +124,6 @@ const RepairDetails = () => {
               Disc Mon-Thu
             </TableCell>
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
-              Disc bonus
-            </TableCell>
-            <TableCell align="left" sx={{ fontWeight: "bold" }}>
               Surch Car Age
             </TableCell>
             <TableCell align="left" sx={{ fontWeight: "bold" }}>
@@ -123,7 +148,7 @@ const RepairDetails = () => {
             >
               <TableCell align="left">-{repair.discRegClient}</TableCell>
               <TableCell align="left">-{repair.discMonThu}</TableCell>
-              <TableCell align="left">-{repair.discBonus}</TableCell>
+
               <TableCell align="left">+{repair.surchCarage}</TableCell>
               <TableCell align="left">+{repair.surchMileage}</TableCell>
               <TableCell align="left">+{repair.surchDelay}</TableCell>
@@ -174,8 +199,24 @@ const RepairDetails = () => {
           ))}
         </TableBody>
       </Table>
-      <h2>Total: ${totalAmount}</h2>
+      <h3>Discount bonus: ${discountBonus}</h3>
+      <h2>Total: ${totalAmount-discountBonus} </h2>
+      <p>
+        closing the order implies adding a discount bonus to the client, if exists  
+      </p>
+      <Button
+        variant="contained"
+        color="info"
+        size="small"
+        onClick={() => handleCloseOrder()}
+        style={{ marginLeft: "0.5rem" }}
+        startIcon={<GppBadRoundedIcon />}
+      >
+        Close Order
+      </Button>
+      <br /><br />
       <Link to="/repair/list">Back to List</Link>
+      <br />
     </TableContainer>
   );
 };
